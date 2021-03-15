@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['auth.shopify','billable'])->group(function(){
+    Route::get('/', 'OrderController@dashboard')->name('home');
+    Route::get('/orders/synchronize','OrderController@SynchronizeOrders')->name('sync.Orders');
 });
+
+

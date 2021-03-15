@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('c.png')}}">
-    <title>Dashboard</title>
+    <title>Over Print</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('material/assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- chartist CSS -->
@@ -63,7 +63,7 @@
                         <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
 
                         <!-- Light Logo icon -->
-                        <a href="{{route('admin.orders')}}">
+                        <a href="">
                             <img src="{{asset('c.png')}}" alt="homepage" height="50px" width="50px" class="light-logo"  />
                         </a>
                     </b>
@@ -96,7 +96,7 @@
                     <!-- ============================================================== -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" onclick="document.getElementById('logout-form').submit();" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-power"></i>Logout</a>
-                        <form id="logout-form" action="{{route('logout')}}" method="POST">
+                        <form id="logout-form" action="" method="POST">
                             @csrf
                         </form>
                     </li>
@@ -117,26 +117,17 @@
 
             <nav class="sidebar-nav">
                 <ul id="sidebarnav">
-                    <li> <a class="waves-effect waves-dark" href="{{route('home')}}" aria-expanded="false"><i class="mdi mdi-home-variant"></i><span class="hide-menu">Home</span></a>
+                    <li> <a class="waves-effect waves-dark" href="" aria-expanded="false"><i class="mdi mdi-home-variant"></i><span class="hide-menu">Home</span></a>
                     </li>
                     <li> <a class="waves-effect waves-dark"   data-toggle="collapsed" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Orders</span></a>
                         <ul class="collapsed" id="collapseExample">
-                            <li><a href="{{route('admin.orders')}}">All Orders</a></li>
-                            <li><a href="{{route('admin.orders')}}?type=1"><span class="dot dot-warning"></span> In-Processing Orders</a></li>
-                            <li><a href="{{route('orders.new')}}"><span class="dot dot-alert"></span>  New Orders</a></li>
-                            <li><a href="{{route('admin.orders')}}?type=2"><span class="dot dot-primary"></span>  Completed Orders</a></li>
+                            <li><a href="">All Orders</a></li>
+                            <li><a href=""><span class="dot dot-warning"></span> In-Processing Orders</a></li>
+                            <li><a href=""><span class="dot dot-alert"></span>  New Orders</a></li>
+                            <li><a href=""><span class="dot dot-primary"></span>  Completed Orders</a></li>
 
                         </ul>
                     </li>
-                    @hasrole('super-admin')
-                    <li> <a  class="waves-effect waves-dark"   data-toggle="collapse" data-target="#collapsing" aria-expanded="false" aria-controls="collapsing"><i class="mdi mdi-account"></i><span class="hide-menu">Managment</span></a>
-                        <ul class="collapse" id="collapsing">
-                            <li><a href="{{route('admin.designer.dashboard')}}">Dashboard</a></li>
-                            <li><a href="{{route('admin.background')}}"> Background</a></li>
-
-                        </ul>
-                    </li>
-                    @endhasrole
 
 
                     {{--<li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-account"></i><span class="hide-menu">Managment</span></a>--}}
