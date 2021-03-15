@@ -11,6 +11,24 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    public function dashboard()
+    {
+        $shop=Auth::user();
+        return redirect()->route('admin.orders');
+    }
+
+    public function orders(Request  $request)
+    {
+        $shop=Auth::user();
+        $status='pending';
+        if ($request->input('status'))
+        {
+            $status=$request->input('status');
+        }
+        $orders=Order::where('shop',$shop->name)->where('status',$status)->paginate(30);
+        $orders->append(['status'=>$request->input('status')]);
+        return view('admin.order',compact('orders'));
+    }
     public function SynchronizeOrders()
     {
         $shop = Auth::user();
@@ -31,9 +49,13 @@ class OrderController extends Controller
                     'status'=>'any',
                     'created_at_min'=>$date
                 ]);
+
                 if (isset($orders['errors']) && !$orders['errors']) {
                     {
-                        $next = $orders['link']['next'];
+                        if(isset($orders['link']['next']))
+                        {
+                            $next = $orders['link']['next'];
+                        }
                         $orders = $orders['body']['orders'];
                         foreach ($orders as $order) {
                             $this->CreateOrder($order, $shop->name);

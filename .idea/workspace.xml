@@ -19,14 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="360ae079-3a3c-41e2-a3cc-e2c73bbbe210" name="Default Changelist" comment="First Commit">
-      <change afterPath="$PROJECT_DIR$/app/Helpers.php" afterDir="false" />
+    <list default="true" id="360ae079-3a3c-41e2-a3cc-e2c73bbbe210" name="Default Changelist" comment="Order Creation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/shopify-app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/shopify-app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/material/css/colors/blue.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/material/css/colors/blue.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/order.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -201,7 +197,8 @@
       <updated>1615644040298</updated>
       <workItem from="1615644041427" duration="3094000" />
       <workItem from="1615658536124" duration="553000" />
-      <workItem from="1615836390990" duration="1627000" />
+      <workItem from="1615836390990" duration="1780000" />
+      <workItem from="1615840564726" duration="1877000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1615644986126</created>
@@ -210,7 +207,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615644986126</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Order Creation">
+      <created>1615838169679</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1615838169679</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -226,20 +230,22 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="First Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="First Commit" />
+    <MESSAGE value="Order Creation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Order Creation" />
   </component>
   <component name="WindowStateProjectService">
     <state x="497" y="115" key="SettingsEditor" timestamp="1615837274059">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="497" y="115" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1615837274059" />
-    <state x="552" y="255" key="Vcs.Push.Dialog.v2" timestamp="1615645027502">
+    <state x="552" y="255" key="Vcs.Push.Dialog.v2" timestamp="1615838173495">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="255" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1615645027502" />
+    <state x="552" y="255" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1615838173495" />
     <state x="761" y="429" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1615644071689">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
