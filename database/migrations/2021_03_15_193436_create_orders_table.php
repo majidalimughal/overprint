@@ -20,7 +20,10 @@ class CreateOrdersTable extends Migration
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->float('discount_amount')->nullable();
-            $table->string('status')->nullable();
+            $table->string('fulfillment_status')->nullable();
+            $table->string('status')->default('open');
+            $table->string('financial_status')->nullable();
+            $table->timestamp('cancelled_at')->nullable();
             $table->float('price')->nullable();
             $table->float('total_weight')->nullable();
             $table->float('total_tax')->nullable();
@@ -28,6 +31,7 @@ class CreateOrdersTable extends Migration
             $table->text('shipping_address')->nullable();
             $table->text('billing_address')->nullable();
             $table->longText('shipping_lines')->nullable();
+            $table->longText('tracking_number')->nullable();
             $table->timestamps();
         });
     }

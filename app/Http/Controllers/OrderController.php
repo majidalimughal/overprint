@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Osiset\ShopifyApp\Storage\Models\Plan;
 
 class OrderController extends Controller
 {
@@ -20,12 +21,20 @@ class OrderController extends Controller
     public function orders(Request  $request)
     {
         $shop=Auth::user();
-        $status='pending';
+        $status=null;
+        $orders=Order::where('shop',$shop->name)->newQuery();
         if ($request->input('status'))
         {
             $status=$request->input('status');
         }
-        $orders=Order::where('shop',$shop->name)->where('status',$status)->paginate(30);
+        if($status=='cancelled')
+        {
+            $orders=$orders->whereNotNull('cancelled_at')->paginate(30);
+        }
+        else
+        {
+            $orders=$orders->where('fulfillment_status',$status)->whereNull('cancelled_at')->paginate(30);
+        }
         $orders->append(['status'=>$request->input('status')]);
         return view('admin.order',compact('orders'));
     }
@@ -102,12 +111,19 @@ class OrderController extends Controller
             $ord->name = $order->order_number;
             $ord->created_at=Carbon::createFromTimeString($order->created_at)->format('Y-m-d H:i:s');
             $ord->updated_at=Carbon::createFromTimeString($order->updated_at)->format('Y-m-d H:i:s');
+            if($order->cancelled_at)
+            {
+                $ord->cancelled_at=Carbon::createFromTimeString($order->cancelled_at)->format('Y-m-d H:i:s');
+                $ord->status='cancelled';
+            }
             $ord->email = $order->email;
             $ord->price = $order->total_price;
             $ord->total_line_items_price = $order->subtotal_price;
             $ord->total_weight = $order->total_weight;
             $ord->total_tax = $order->total_tax;
-            $ord->status = $order->financial_status;
+            $ord->financial_status = $order->financial_status;
+            $ord->fulfillment_status = $order->fulfillment_status;
+
             $ord->discount_amount = $order->total_discounts;
             if($payment!==null)
             {
@@ -182,5 +198,23 @@ class OrderController extends Controller
             dd($exception);
         }
 
+    }
+
+
+    public function orderDetail($id)
+    {
+        $order=Order::find($id);
+        if ($order)
+        {
+            return view('admin.order-details',compact('order'));
+        }
+        abort(404);
+    }
+
+    public function plans()
+    {
+        $plans=Plan::all();
+        $shop=Auth::user();
+        return view('admin.pricing',compact('plans','shop'));
     }
 }

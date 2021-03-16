@@ -117,16 +117,24 @@
 
             <nav class="sidebar-nav">
                 <ul id="sidebarnav">
-                    <li> <a class="waves-effect waves-dark" href="" aria-expanded="false"><i class="mdi mdi-home-variant"></i><span class="hide-menu">Home</span></a>
+                    <li> <a class="waves-effect waves-dark" href="{{route('home')}}" aria-expanded="false"><i class="mdi mdi-home-variant"></i><span class="hide-menu">Home</span></a>
                     </li>
-                    <li> <a class="waves-effect waves-dark"   data-toggle="collapsed" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Orders</span></a>
+                    <li> <a class="waves-effect waves-dark" href="{{route('admin.orders')}}"    data-toggle="collapsed" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Orders</span></a>
                         <ul class="collapsed" id="collapseExample">
-                            <li><a href="">All Orders</a></li>
-                            <li><a href=""><span class="dot dot-warning"></span> In-Processing Orders</a></li>
-                            <li><a href=""><span class="dot dot-alert"></span>  New Orders</a></li>
-                            <li><a href=""><span class="dot dot-primary"></span>  Completed Orders</a></li>
+                            <li><a href="{{route('admin.orders')}}">All Orders</a></li>
+                            <li><a href="{{route('admin.orders')}}?status="><span class="dot dot-alert"></span>  New Orders</a></li>
+                            <li><a href="{{route('admin.orders')}}?status=fulfilled"><span class="dot dot-primary"></span>  Completed Orders</a></li>
+                            <li><a href="{{route('admin.orders')}}?status=cancelled"><span class="dot dot-warning"></span> Cancelled Orders</a></li>
 
                         </ul>
+                    </li>
+                    <li> <a class="waves-effect waves-dark" href="{{route('home')}}" aria-expanded="false"><i class="mdi mdi-database"></i><span class="hide-menu">Products</span></a>
+                    </li>
+
+                    <li> <a class="waves-effect waves-dark" href="{{route('app.plans')}}" aria-expanded="false"><i class="mdi mdi-account-circle"></i><span class="hide-menu">Account & Billing</span></a>
+                    </li>
+
+                    <li> <a class="waves-effect waves-dark" href="{{route('home')}}" aria-expanded="false"><i class="mdi mdi-help-circle"></i><span class="hide-menu">Support</span></a>
                     </li>
 
 
@@ -180,7 +188,7 @@
 <!-- slimscrollbar scrollbar JavaScript -->
 <script src="{{asset('material/js/jquery.slimscroll.js')}}"></script>
 <!--Wave Effects -->
-<script src="{{asset('material/js/waves.js')}}"></script>
+{{--<script src="{{asset('material/js/waves.js')}}"></script>--}}
 <!--Menu sidebar -->
 <script src="{{asset('material/js/sidebarmenu.js')}}"></script>
 <!--stickey kit -->
@@ -209,7 +217,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
 <!-- Chart JS -->
 {{--<script src="{{asset('material/js/dashboard1.js')}}"></script>--}}
-<script src="{{asset('js/script.js')}}"></script>
+{{--<script src="{{asset('js/script.js')}}"></script>--}}
 
 
 </body>
