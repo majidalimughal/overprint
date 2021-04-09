@@ -131,7 +131,9 @@
                     <li> <a class="waves-effect waves-dark" href="{{route('home')}}" aria-expanded="false"><i class="mdi mdi-database"></i><span class="hide-menu">Products</span></a>
                     </li>
 
-                    <li> <a class="waves-effect waves-dark" href="{{route('app.plans')}}" aria-expanded="false"><i class="mdi mdi-account-circle"></i><span class="hide-menu">Account & Billing</span></a>
+{{--                    <li> <a class="waves-effect waves-dark" href="{{route('app.plans')}}" aria-expanded="false"><i class="mdi mdi-account-circle"></i><span class="hide-menu">Account & Billing</span></a>--}}
+                    </li>
+                    <li> <a class="waves-effect waves-dark" href="{{route('billing.methods')}}" aria-expanded="false"><i class="mdi mdi-credit-card"></i><span class="hide-menu">Billing Methods</span></a>
                     </li>
 
                     <li> <a class="waves-effect waves-dark" href="{{route('home')}}" aria-expanded="false"><i class="mdi mdi-help-circle"></i><span class="hide-menu">Support</span></a>
