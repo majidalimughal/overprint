@@ -8683,3 +8683,15 @@ form .input-group {
         height: 163px !important;
     }
 }
+
+.no-btn
+{
+    background: none !important;
+    border:none !important;
+}
+.no-btn:focus
+{
+    background: none !important;
+    border:none !important;
+    outline:none !important;
+}

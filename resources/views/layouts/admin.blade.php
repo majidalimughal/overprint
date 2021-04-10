@@ -17,7 +17,7 @@
 {{--    <link href="{{asset('material/assets/plugins/chartist-js/dist/chartist.min.css')}}" rel="stylesheet">--}}
 {{--    <link href="{{asset('material/assets/plugins/chartist-js/dist/chartist-init.css')}}" rel="stylesheet">--}}
 {{--    <link href="{{asset('material/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css')}}" rel="stylesheet">--}}
-    <!-- toggle---->
+<!-- toggle---->
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <!--This page css - Morris CSS -->
     <link href="{{asset('material/assets/plugins/c3-master/c3.min.css')}}" rel="stylesheet">
@@ -43,7 +43,8 @@
 <!-- ============================================================== -->
 <div class="preloader">
     <svg class="circular" viewBox="25 25 50 50">
-        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+    </svg>
 </div>
 <!-- ============================================================== -->
 <!-- Main wrapper - style you can find in pages.scss -->
@@ -64,14 +65,15 @@
 
                         <!-- Light Logo icon -->
                         <a href="">
-                            <img src="{{asset('c.png')}}" alt="homepage" height="50px" width="50px" class="light-logo"  />
+                            <img src="{{asset('c.png')}}" alt="homepage" height="50px" width="50px" class="light-logo"/>
                         </a>
                     </b>
                     <!--End Logo icon -->
                     <!-- Logo text --><span>
 
                          <!-- Light Logo text -->
-                         {{--<img src="{{asset('material/assets/images/logo-light-text.png')}}" class="light-logo" alt="homepage" />--}}</span> </a>
+                         {{--<img src="{{asset('material/assets/images/logo-light-text.png')}}" class="light-logo" alt="homepage" />--}}</span>
+                </a>
             </div>
             <!-- ============================================================== -->
             <!-- End Logo -->
@@ -82,7 +84,8 @@
                 <!-- ============================================================== -->
                 <ul class="navbar-nav mr-auto mt-md-0">
                     <!-- This is  -->
-                    <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
+                    <li class="nav-item"><a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark"
+                                            href="javascript:void(0)"><i class="mdi mdi-menu"></i></a></li>
                     <!-- ============================================================== -->
                     <!-- Search -->
                     <!-- ============================================================== -->
@@ -90,17 +93,21 @@
                 <!-- ============================================================== -->
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
-                <ul class="navbar-nav my-lg-0">
-                    <!-- ============================================================== -->
-                    <!-- Profile -->
-                    <!-- ============================================================== -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" onclick="document.getElementById('logout-form').submit();" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-power"></i>Logout</a>
-                        <form id="logout-form" action="" method="POST">
-                            @csrf
-                        </form>
-                    </li>
-                </ul>
+                @if(\Illuminate\Support\Facades\Auth::user()->role!=='store')
+                    <ul class="navbar-nav my-lg-0">
+                        <!-- ============================================================== -->
+                        <!-- Profile -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark"
+                               onclick="document.getElementById('logout-form').submit();" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-power"></i>Logout</a>
+                            <form id="logout-form" action="{{route('logout')}}" method="POST">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
+                @endif
             </div>
         </nav>
     </header>
@@ -117,33 +124,46 @@
 
             <nav class="sidebar-nav">
                 <ul id="sidebarnav">
-                    <li> <a class="waves-effect waves-dark" href="{{route('home')}}" aria-expanded="false"><i class="mdi mdi-home-variant"></i><span class="hide-menu">Home</span></a>
+                    <li><a class="waves-effect waves-dark" href="{{route('home')}}" aria-expanded="false"><i
+                                class="mdi mdi-home-variant"></i><span class="hide-menu">Home</span></a>
                     </li>
-                    <li> <a class="waves-effect waves-dark" href="{{route('admin.orders')}}"    data-toggle="collapsed" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Orders</span></a>
+                    <li><a class="waves-effect waves-dark" href="{{route('admin.orders')}}" data-toggle="collapsed"
+                           data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i
+                                class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Orders</span></a>
                         <ul class="collapsed" id="collapseExample">
                             <li><a href="{{route('admin.orders')}}">All Orders</a></li>
-                            <li><a href="{{route('admin.orders')}}?status="><span class="dot dot-alert"></span>  New Orders</a></li>
-                            <li><a href="{{route('admin.orders')}}?status=fulfilled"><span class="dot dot-primary"></span>  Completed Orders</a></li>
-                            <li><a href="{{route('admin.orders')}}?status=cancelled"><span class="dot dot-warning"></span> Cancelled Orders</a></li>
+                            <li><a href="{{route('admin.orders')}}?status="><span class="dot dot-alert"></span> New
+                                    Orders</a></li>
+                            <li><a href="{{route('admin.orders')}}?status=fulfilled"><span
+                                        class="dot dot-primary"></span> Completed Orders</a></li>
+                            <li><a href="{{route('admin.orders')}}?status=cancelled"><span
+                                        class="dot dot-warning"></span> Cancelled Orders</a></li>
 
                         </ul>
                     </li>
-                    <li> <a class="waves-effect waves-dark" href="{{route('shopify.products')}}"    data-toggle="collapsed" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Products</span></a>
+                    <li><a class="waves-effect waves-dark" href="{{route('shopify.products')}}" data-toggle="collapsed"
+                           data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i
+                                class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Products</span></a>
                         <ul class="collapsed" id="collapseExample">
-                            <li><a href="{{route('shopify.products')}}"><span class="dot dot-success"></span>Store Products</a></li>
-                            <li><a href="{{route('shopify.products')}}?build=true"><span class="dot dot-alert"></span>Synchronized Products</a></li>
-                            <li><a href="{{route('available.products')}}"><span class="dot dot-primary"></span>Build Product</a></li>
-{{--                            <li><a href="{{route('admin.orders')}}?status=cancelled"><span class="dot dot-warning"></span> Cancelled Orders</a></li>--}}
+                            <li><a href="{{route('shopify.products')}}"><span class="dot dot-success bg-purple"></span>Store
+                                    Products</a></li>
+                            <li><a href="{{route('shopify.products')}}?build=true"><span class="dot dot-alert"></span>Synchronized
+                                    Products</a></li>
+                            <li><a href="{{route('available.products')}}"><span class="dot dot-primary"></span>Build
+                                    Product</a></li>
+                            {{--                            <li><a href="{{route('admin.orders')}}?status=cancelled"><span class="dot dot-warning"></span> Cancelled Orders</a></li>--}}
 
                         </ul>
                     </li>
 
-{{--                    <li> <a class="waves-effect waves-dark" href="{{route('app.plans')}}" aria-expanded="false"><i class="mdi mdi-account-circle"></i><span class="hide-menu">Account & Billing</span></a>--}}
+                    {{--                    <li> <a class="waves-effect waves-dark" href="{{route('app.plans')}}" aria-expanded="false"><i class="mdi mdi-account-circle"></i><span class="hide-menu">Account & Billing</span></a>--}}
                     </li>
-                    <li> <a class="waves-effect waves-dark" href="{{route('billing.methods')}}" aria-expanded="false"><i class="mdi mdi-credit-card"></i><span class="hide-menu">Billing Methods</span></a>
+                    <li><a class="waves-effect waves-dark" href="{{route('billing.methods')}}" aria-expanded="false"><i
+                                class="mdi mdi-credit-card"></i><span class="hide-menu">Billing Methods</span></a>
                     </li>
 
-                    <li> <a class="waves-effect waves-dark" href="{{route('home')}}" aria-expanded="false"><i class="mdi mdi-help-circle"></i><span class="hide-menu">Support</span></a>
+                    <li><a class="waves-effect waves-dark" href="{{route('home')}}" aria-expanded="false"><i
+                                class="mdi mdi-help-circle"></i><span class="hide-menu">Support</span></a>
                     </li>
 
 
@@ -194,6 +214,7 @@
 <!-- Bootstrap tether Core JavaScript -->
 <script src="{{asset('material/assets/plugins/bootstrap/js/tether.min.js')}}"></script>
 <script src="{{asset('material/assets/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>--}}
 <!-- slimscrollbar scrollbar JavaScript -->
 <script src="{{asset('material/js/jquery.slimscroll.js')}}"></script>
 <!--Wave Effects -->
@@ -227,6 +248,12 @@
 <!-- Chart JS -->
 {{--<script src="{{asset('material/js/dashboard1.js')}}"></script>--}}
 {{--<script src="{{asset('js/script.js')}}"></script>--}}
+
+{{--<script>--}}
+{{--    $(function () {--}}
+{{--        $('[data-toggle="tooltip"]').tooltip()--}}
+{{--    })--}}
+{{--</script>--}}
 
 
 </body>

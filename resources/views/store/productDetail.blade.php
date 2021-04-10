@@ -3,7 +3,7 @@
     <div class="row page-titles p-4">
         <div class="col-md-5 col-8 align-self-center">
             <h2><strong>{{$product->title}}
-                    {{--                    <span class="mdi mdi-check-circle text-warning"></span>--}}
+                    @if($product->has_print_product) <button class="mdi mdi-check-circle text-warning no-btn" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></button> @endif
                 </strong></h2>
         </div>
     </div>

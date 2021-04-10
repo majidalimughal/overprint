@@ -139,7 +139,7 @@ class ProductController extends Controller
 
     public function productDetail($id)
     {
-        $product=Product::where([
+        $product=Product::with('has_print_product')->where([
             'id'=>decrypt($id),
             'shop'=>Auth::user()->name
         ])->first();
