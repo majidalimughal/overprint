@@ -11,18 +11,36 @@ class Product extends Model
 
     public function variantsCount()
     {
-        $variants=json_decode($this->variants);
-        if(count($variants))
-        {
+        $variants = $this->variants;
+        if (count($variants)) {
             return collect($variants)->pluck('title')->toArray();
-        }else
-        {
+        } else {
             return [];
         }
     }
 
+    public function getVariantsAttribute($variants)
+    {
+        if ($variants !== null) {
+            return json_decode($variants);
+        } else return [];
+    }
+    public function getImagesAttribute($images)
+    {
+        if ($images !== null) {
+            return json_decode($images);
+        } else return [];
+    }
+
+    public function getOptionsAttribute($options)
+    {
+        if ($options !== null) {
+            return json_decode($options);
+        } else return [];
+    }
+
     public function has_print_product()
     {
-        return $this->belongsTo(PrintProduct::class,'print_product_id');
+        return $this->belongsTo(PrintProduct::class, 'print_product_id');
     }
 }

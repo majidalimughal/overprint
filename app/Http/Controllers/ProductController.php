@@ -66,6 +66,7 @@ class ProductController extends Controller
         $Product->title=$product->title;
         $Product->vendor=$product->vendor;
         $Product->product_type=$product->product_type;
+        $Product->body_html=$product->body_html;
         $Product->tags=$product->tags;
         $Product->options=json_encode($product->options);
         $Product->images=json_encode($product->images);

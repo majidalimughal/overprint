@@ -19,15 +19,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="360ae079-3a3c-41e2-a3cc-e2c73bbbe210" name="Default Changelist" comment="10-04-2021">
-      <change afterPath="$PROJECT_DIR$/resources/views/store/build_products.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/store/productDetail.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/store/shopify_products.blade.php" afterDir="false" />
+    <list default="true" id="360ae079-3a3c-41e2-a3cc-e2c73bbbe210" name="Default Changelist" comment="11-04-2021">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/store/productDetail.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/store/productDetail.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,7 +209,7 @@
       <workItem from="1617970217492" duration="594000" />
       <workItem from="1617990901946" duration="51000" />
       <workItem from="1617993739091" duration="3509000" />
-      <workItem from="1618041666103" duration="7477000" />
+      <workItem from="1618041666103" duration="9146000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1615644986126</created>
@@ -250,7 +246,14 @@
       <option name="project" value="LOCAL" />
       <updated>1618002572261</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="11-04-2021">
+      <created>1618053071021</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1618053071021</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,7 +276,8 @@
     <MESSAGE value="Order Creation" />
     <MESSAGE value="16-03-2021" />
     <MESSAGE value="10-04-2021" />
-    <option name="LAST_COMMIT_MESSAGE" value="10-04-2021" />
+    <MESSAGE value="11-04-2021" />
+    <option name="LAST_COMMIT_MESSAGE" value="11-04-2021" />
   </component>
   <component name="WindowStateProjectService">
     <state x="740" y="261" key="FileChooserDialogImpl" timestamp="1616186843348">
@@ -284,17 +288,17 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="497" y="115" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1615920500685" />
-    <state x="552" y="255" key="Vcs.Push.Dialog.v2" timestamp="1618002580145">
+    <state x="552" y="255" key="Vcs.Push.Dialog.v2" timestamp="1618053075398">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="255" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1618002580145" />
+    <state x="552" y="255" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1618053075398" />
     <state x="761" y="429" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1615644071689">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="761" y="429" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1615644071689" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1618049602705">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1618053293250">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1618049602705" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1618053293250" />
   </component>
 </project>
