@@ -21,6 +21,14 @@ Route::middleware(['auth.shopify'])->group(function(){
     Route::get('/orders/{id}/detail',[\App\Http\Controllers\OrderController::class,'orderDetail'])->name('admin.order.detail');
     Route::get('/plans',[\App\Http\Controllers\OrderController::class,'plans'])->name('app.plans');
     Route::get('/billing/methods',[\App\Http\Controllers\SettingController::class,'billingMethods'])->name('billing.methods');
+
+
+    Route::get('/shopify/synchronize/products',[\App\Http\Controllers\ProductController::class,'synchronzeProducts'])->name('shopify.synchronize.products');
+    Route::get('shopify/products',[\App\Http\Controllers\ProductController::class,'index'])->name('shopify.products');
+
+    Route::get('/app/products',[\App\Http\Controllers\ProductController::class,'availableProducts'])->name('available.products');
+
+    Route::get('/shopify/products/{id}/details',[\App\Http\Controllers\ProductController::class,'productDetail'])->name('shopify.product.detail');
 });
 
 

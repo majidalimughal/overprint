@@ -128,7 +128,14 @@
 
                         </ul>
                     </li>
-                    <li> <a class="waves-effect waves-dark" href="{{route('home')}}" aria-expanded="false"><i class="mdi mdi-database"></i><span class="hide-menu">Products</span></a>
+                    <li> <a class="waves-effect waves-dark" href="{{route('shopify.products')}}"    data-toggle="collapsed" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Products</span></a>
+                        <ul class="collapsed" id="collapseExample">
+                            <li><a href="{{route('shopify.products')}}"><span class="dot dot-success"></span>Store Products</a></li>
+                            <li><a href="{{route('shopify.products')}}?build=true"><span class="dot dot-alert"></span>Synchronized Products</a></li>
+                            <li><a href="{{route('available.products')}}"><span class="dot dot-primary"></span>Build Product</a></li>
+{{--                            <li><a href="{{route('admin.orders')}}?status=cancelled"><span class="dot dot-warning"></span> Cancelled Orders</a></li>--}}
+
+                        </ul>
                     </li>
 
 {{--                    <li> <a class="waves-effect waves-dark" href="{{route('app.plans')}}" aria-expanded="false"><i class="mdi mdi-account-circle"></i><span class="hide-menu">Account & Billing</span></a>--}}

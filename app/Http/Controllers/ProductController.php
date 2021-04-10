@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PrintProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -36,6 +38,8 @@ class ProductController extends Controller
                 }
             }
         }
+
+        return redirect()->back()->with('success','Products will be synchronized!');
     }
     public function CreateUpdateProduct($product,$shop,$print_id=null)
     {
@@ -96,9 +100,52 @@ class ProductController extends Controller
 
         $Product->save();
     }
-    public function index()
+    public function index(Request  $request)
     {
-        $products = Product::where('shop', Auth::user()->name)->paginate(20);
-        return view('product.index', compact('products'));
+        $products = Product::with('has_print_product')->where('shop', Auth::user()->name);
+        if ($request->input('build'))
+        {
+            $products=$products->whereHas('has_print_product');
+        }
+        if ($request->input('search'))
+        {
+            $products=$products->where('title','like','%'.$request->input('search').'%')
+                ->orWhere('vendor','like','%'.$request->input('search').'%')
+                ->orWhere('product_type','like','%'.$request->input('search').'%')
+                ->orWhere('tags','like','%'.$request->input('search').'%');
+        }
+
+
+        $products=$products->paginate(20);
+        if ($request->input('search'))
+        {
+            $products->appends(['search'=>$request->input('search')]);
+        }
+        if ($request->input('build'))
+        {
+            $products->appends(['build'=>$request->input('build')]);
+        }
+        return view('store.shopify_products', compact('products'));
+    }
+
+
+    public function availableProducts(Request  $request)
+    {
+        $ids=DB::table('products')->where('shop', Auth::user()->name)->pluck('print_product_id')->toArray();
+        $products = PrintProduct::whereNotIn('id',$ids)->paginate(20);
+        return view('store.build_products',compact('products'));
+    }
+
+    public function productDetail($id)
+    {
+        $product=Product::where([
+            'id'=>decrypt($id),
+            'shop'=>Auth::user()->name
+        ])->first();
+        if ($product===null)
+        {
+            abort(404);
+        }
+        return view('store.productDetail',compact('product'));
     }
 }
