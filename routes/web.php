@@ -39,8 +39,13 @@ Route::middleware(['auth.shopify'])->group(function(){
 
 Route::middleware('auth')->prefix('admin')->group(function (){
     Route::get('/',[\App\Http\Controllers\AdminController::class,'index'])->name('admin');
-});
+    Route::get('/orders',[\App\Http\Controllers\AdminController::class,'orders'])->name('admin.orders.index');
 
+});
+Route::get('/orders/{id}/fulfillment',[\App\Http\Controllers\OrderController::class,'orderFulfillment'])->name('admin.order.fulfillment');
+Route::post('/order/{id}/add/tracking', [\App\Http\Controllers\OrderController::class,'addOrderTracking'])->name('admin.order.fulfillment.tracking');
+Route::get('/order/{id}/cancel/fulfillment/{fulfillment_id}',  [\App\Http\Controllers\OrderController::class,'cancelOrderFulfillment'])->name('admin.order.fulfillment.cancel');
+Route::post('/order/{id}/fulfillment/process', [\App\Http\Controllers\OrderController::class,'processOrderFulfillment'])->name('admin.order.fulfillment.process');
 
 
 

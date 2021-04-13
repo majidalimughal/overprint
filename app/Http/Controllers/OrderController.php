@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LineItem;
-use App\Models\Order;
-use App\Models\User;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Order;
+use App\Models\LineItem;
 use Illuminate\Http\Request;
+use App\Models\OrderFulfillment;
+use App\Models\FulfillmentLineItem;
 use Illuminate\Support\Facades\Auth;
 use Osiset\ShopifyApp\Storage\Models\Plan;
 
@@ -156,6 +158,8 @@ class OrderController extends Controller
                 }
                 $lineItem->title = $line_item->name;
                 $lineItem->quantity = $line_item->quantity;
+                $lineItem->fulfillable_quantity = $line_item->quantity;
+                $lineItem->fulfillment_status = 'unfulfilled';
                 $lineItem->price = $line_item->price;
                 $lineItem->variant_id = $line_item->variant_id;
                 $lineItem->product_id = $line_item->product_id;
@@ -211,10 +215,246 @@ class OrderController extends Controller
         abort(404);
     }
 
+    public function orderFulfillment($id)
+    {
+        $order=Order::find($id);
+        if ($order)
+        {
+            return view('admin.order-fulfillment',compact('order'));
+        }
+        abort(404);
+    }
+
     public function plans()
     {
         $plans=Plan::all();
         $shop=Auth::user();
         return view('admin.pricing',compact('plans','shop'));
     }
+
+    public function processOrderFulfillment(Request $request, $id)
+    {
+        $order = Order::find($id);
+        $admin = Auth::user();
+
+        if ($order != null) {
+            if ($order->financial_status == 'paid') {
+                $fulfillable_quantities = $request->input('item_fulfill_quantity');
+                
+
+                $shop = User::where('name', $order->shop)->first();
+                Auth::login($shop);
+                
+                $shopify_fulfillment = null;
+                if ($shop != null) {
+                    $location_response = json_decode(json_encode($shop->api()->rest('GET', '/admin/locations.json')));
+                                                        
+                    if (!$location_response->errors) {
+
+                        foreach ($location_response->body->locations as $location) {
+                            if ($location->name == "IZIKI 1 BLOC 25, NUMERO 165") {
+                                $data = [
+                                    "fulfillment" => [
+                                        "location_id" => $location->id,
+                                        "tracking_number" => null,
+                                        "notify_customer" => false,
+                                        "line_items" => [
+                                        ]
+                                    ]
+                                ];
+                            }
+                        }
+
+                        foreach ($request->input('item_id') as $index => $item) {
+                            $line_item = LineItem::find($item);
+                            if ($line_item != null && $fulfillable_quantities[$index] > 0) {
+                                array_push($data['fulfillment']['line_items'], [
+                                    "id" => $line_item->line_id,
+                                    "quantity" => $fulfillable_quantities[$index],
+                                ]);
+                            }
+                        }
+
+                        
+                        $response = json_decode(json_encode($shop->api()->rest('POST', '/admin/orders/' . $order->shopify_order_id . '/fulfillments.json', $data)));
+
+                        if ($response->errors) {
+                            if(strpos($response->body->base[0], "already fulfilled") !== false){
+                                $res = json_decode(json_encode($shop->api()->rest('GET', '/admin/orders/' . $order->shopify_order_id . '/fulfillments.json')));
+                                Auth::login($admin);
+                                return $this->set_fulfilments_for_already_fulfilled_order($request, $id, $fulfillable_quantities, $order, $res);
+                            }
+                            Auth::login($admin);
+                            return redirect()->back()->with('error', 'Cant Fulfill Items of Order in Related Store!');
+                        } else {
+                            Auth::login($admin);
+                            return $this->set_fulfilments($request, $id, $fulfillable_quantities, $order, $response);
+                        }
+                    } else {
+                        Auth::login($admin);
+                        return redirect()->back()->with('error', 'Cant Fulfill Item Cause Related Store Dont have Location Stored!');
+                    }
+                } else {
+                    Auth::login($admin);
+                    return redirect()->back()->with('error', 'Order Related Store Not Found');
+                }
+               
+            } else {
+                Auth::login($admin);
+                return redirect()->back()->with('error', 'Refunded Order Cant Be Processed Fulfillment');
+            }
+        } else {
+            Auth::login($admin);
+            return redirect()->back()->with('error', 'Order Not Found To Process Fulfillment');
+        }
+
+    }
+
+
+    public function set_fulfilments(Request $request, $id, $fulfillable_quantities, $order, $response): RedirectResponse
+    {
+        foreach ($request->input('item_id') as $index => $item) {
+            $line_item = LineItem::find($item);
+            if ($line_item != null && $fulfillable_quantities[$index] > 0) {
+                if ($fulfillable_quantities[$index] == $line_item->fulfillable_quantity) {
+                    $line_item->fulfillment_status = 'fulfilled';
+
+                } else if ($fulfillable_quantities[$index] < $line_item->fulfillable_quantity) {
+                    $line_item->fulfillment_status = 'partially-fulfilled';
+                }
+                $line_item->fulfillable_quantity = $line_item->fulfillable_quantity - $fulfillable_quantities[$index];
+            }
+            $line_item->save();
+        }
+        $order->fulfillment_status = $order->getStatus($order);
+        $order->save();
+
+        $fulfillment = new OrderFulfillment();
+        $fulfillment->fulfillment_shopify_id = $response->body->fulfillment->id;
+        $fulfillment->name = $response->body->fulfillment->name;
+        $fulfillment->order_id = $order->id;
+        $fulfillment->status = 'fulfilled';
+        $fulfillment->save();
+
+        foreach ($request->input('item_id') as $index => $item) {
+            if ($fulfillable_quantities[$index] > 0) {
+                $fulfillment_line_item = new FulfillmentLineItem();
+                $fulfillment_line_item->fulfilled_quantity = $fulfillable_quantities[$index];
+                $fulfillment_line_item->order_fulfillment_id = $fulfillment->id;
+                $fulfillment_line_item->order_line_item_id = $item;
+                $fulfillment_line_item->save();
+            }
+        }
+
+        return redirect()->back()->with('success', 'Order Line Items Marked as Fulfilled Successfully!');
+    }
+
+    public function set_fulfilments_for_already_fulfilled_order(Request $request, $id, $fulfillable_quantities, $order, $response): RedirectResponse
+    {
+        foreach ($request->input('item_id') as $index => $item) {
+            $line_item = LineItem::find($item);
+            if ($line_item != null && $fulfillable_quantities[$index] > 0) {
+                if ($fulfillable_quantities[$index] == $line_item->fulfillable_quantity) {
+                    $line_item->fulfillment_status = 'fulfilled';
+
+                } else if ($fulfillable_quantities[$index] < $line_item->fulfillable_quantity) {
+                    $line_item->fulfillment_status = 'partially-fulfilled';
+                }
+                $line_item->fulfillable_quantity = $line_item->fulfillable_quantity - $fulfillable_quantities[$index];
+            }
+            $line_item->save();
+        }
+        $order->fulfillment_status = 'fulfilled';
+        $order->save();
+
+
+        $fulfillment = new OrderFulfillment();
+        $fulfillment->fulfillment_shopify_id = $response->body->fulfillments[0]->id;
+        $fulfillment->name = $response->body->fulfillments[0]->name;
+        $fulfillment->order_id = $order->id;
+        $fulfillment->status = 'fulfilled';
+        $fulfillment->save();
+
+        foreach ($request->input('item_id') as $index => $item) {
+            if ($fulfillable_quantities[$index] > 0) {
+                $fulfillment_line_item = new FulfillmentLineItem();
+                $fulfillment_line_item->fulfilled_quantity = $fulfillable_quantities[$index];
+                $fulfillment_line_item->order_fulfillment_id = $fulfillment->id;
+                $fulfillment_line_item->order_line_item_id = $item;
+                $fulfillment_line_item->save();
+
+            }
+        }
+
+        return redirect()->back()->with('success', 'Order Line Items Marked as Fulfilled Manually Successfully!');
+    }
+
+
+
+    public function addOrderTracking(Request $request)
+    {
+
+        $order = Order::find($request->id);
+        $admin = Auth::user();
+        $shop = User::where('name', $order->shop)->first();
+        Auth::login($shop);
+
+        if ($order != null) {
+           
+                $fulfillments = $request->input('fulfillment');
+                $tracking_numbers = $request->input('tracking_number');
+                $tracking_urls = $request->input('tracking_url');
+                $tracking_notes = $request->input('tracking_notes');
+
+                
+                if ($shop != null) {
+                    foreach ($fulfillments as $index => $f) {
+                        $current = OrderFulfillment::find($f);
+                        if ($current != null) {
+                            $data = [
+                                "fulfillment" => [
+                                    "tracking_number" => $tracking_numbers[$index],
+                                    "tracking_url" => $tracking_urls[$index],
+                                    "notify_customer" => false,
+                                ]
+                            ];
+                           
+                            $response = json_decode(json_encode($shop->api()->rest('PUT', '/admin/orders/' . $order->shopify_order_id . '/fulfillments/' . $current->fulfillment_shopify_id . '.json', $data)));
+
+                            if (!$response->errors) {
+                                $current->tracking_number = $tracking_numbers[$index];
+                                $current->tracking_url = $tracking_urls[$index];
+                                $current->tracking_notes = $tracking_notes[$index];
+                                
+                                $current->save();
+                                $this->CompleteFullFillment($current, $shop);
+                                
+                            }
+                        }
+                    }
+                } else {
+                    Auth::login($admin);
+                    return redirect()->back()->with('error', 'Order Related Store Not Found');
+                }
+                Auth::login($admin);
+                return redirect()->back()->with('success', 'Tracking Details Added To Fulfillment Successfully!');
+            
+        }
+        else {
+            Auth::login($admin);
+            return redirect()->back()->with('error', 'Order Not Found To Add Tracking In Fulfillment');
+        }
+    }
+
+
+    public function CompleteFullFillment($orderFullfillment, $shop)
+    {
+        $order = Order::where('id', $orderFullfillment->order_id)->first();
+        if ($orderFullfillment->fulfillment_shopify_id) {
+            $shop->api()->rest('POST', '/admin/orders/' . $order->shopify_order_id . '/fulfillments/' . $orderFullfillment->fulfillment_shopify_id . '/complete.json');
+        }
+
+    }
+
+
 }

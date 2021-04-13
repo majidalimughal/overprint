@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\OrderFulfillment;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -41,5 +42,20 @@ class Order extends Model
         {
             return null;
         }
+    }
+
+    public function getStatus($order){
+        $quanity = $order->has_lineItems->sum('quantity');
+        $fulfillable_quanity = $order->has_lineItems->sum('fulfillable_quantity');
+        if($fulfillable_quanity == 0){
+            return 'fulfilled';
+        }
+        else if($fulfillable_quanity == $quanity || $fulfillable_quanity < $quanity){
+            return 'unfulfilled';
+        }
+    }
+
+    public function fulfillments() {
+        return $this->hasMany(OrderFulfillment::class);
     }
 }
