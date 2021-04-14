@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Order extends Model
 {
     use HasFactory;
+
+    public function has_shop()
+    {
+        return $this->belongsTo(User::class,'shop','name');
+    }
     public function has_lineItems()
     {
         return $this->hasMany(LineItem::class,'order_id');

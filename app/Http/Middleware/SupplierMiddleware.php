@@ -17,7 +17,7 @@ class SupplierMiddleware
     public function handle(Request $request, Closure $next)
     {
         $authUser=auth()->user();
-        if ($authUser!==null && $authUser->role=='supplier')
+        if ($authUser!==null && in_array($authUser->role,['supplier','admin']))
         {
             return $next($request);
         }else

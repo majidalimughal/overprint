@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.main')
 @section('content')
     <div class="row page-titles">
         <div class="col-md-12 col-12" align="center">

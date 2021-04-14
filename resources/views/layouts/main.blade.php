@@ -144,6 +144,20 @@
 
                         </ul>
                     </li>
+                    <li><a class="waves-effect waves-dark" href="{{route('admin.orders.index')}}" data-toggle="collapsed"
+                           data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i
+                                class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Orders</span></a>
+                        <ul class="collapsed" id="collapseExample">
+                            <li><a href="{{route('admin.orders.index')}}">All Orders</a></li>
+                            <li><a href="{{route('admin.orders.index')}}?status="><span class="dot dot-alert"></span> New
+                                    Orders</a></li>
+                            <li><a href="{{route('admin.orders.index')}}?status=fulfilled"><span
+                                        class="dot dot-primary"></span> Completed Orders</a></li>
+                            <li><a href="{{route('admin.orders.index')}}?status=cancelled"><span
+                                        class="dot dot-warning"></span> Cancelled Orders</a></li>
+
+                        </ul>
+                    </li>
                     <li><a class="waves-effect waves-dark" href="{{route('admin.products')}}" aria-expanded="false"><i
                                 class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Products</span></a>
                     </li>

@@ -18,13 +18,23 @@ class AdminController extends Controller
         $designs = 0;
         $requested = 0;
         $approved = Order::where('status', 'approved')->count();
-        
-        return view('admin.home')->with([
+
+        return view('superadmin.home')->with([
             'new_orders' => $new_orders,
             'designs' => $designs,
             'requested' => $requested,
             'approved' => $approved
         ]);
+    }
+
+    public function orderDetail($id)
+    {
+        $order=Order::find($id);
+        if ($order)
+        {
+            return view('superadmin.order-details',compact('order'));
+        }
+        abort(404);
     }
 
     public function orders(Request  $request)
@@ -45,7 +55,7 @@ class AdminController extends Controller
             $orders=$orders->where('fulfillment_status',$status)->whereNull('cancelled_at')->paginate(30);
         }
         $orders->append(['status'=>$request->input('status')]);
-        return view('admin.order',compact('orders', 'admin'));
+        return view('superadmin.order',compact('orders', 'admin'));
     }
 
     public function stores()
