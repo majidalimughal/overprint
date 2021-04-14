@@ -50,8 +50,6 @@ Route::middleware(['auth','admin'])->prefix('admin')->group(function (){
     Route::post('/products/{id}/update',[\App\Http\Controllers\AdminController::class,'productUpdate'])->name('admin.product.update');
 });
 
-
-});
 Route::get('/orders/{id}/fulfillment',[\App\Http\Controllers\OrderController::class,'orderFulfillment'])->name('admin.order.fulfillment');
 Route::post('/order/{id}/add/tracking', [\App\Http\Controllers\OrderController::class,'addOrderTracking'])->name('admin.order.fulfillment.tracking');
 Route::get('/order/{id}/cancel/fulfillment/{fulfillment_id}',  [\App\Http\Controllers\OrderController::class,'cancelOrderFulfillment'])->name('admin.order.fulfillment.cancel');
