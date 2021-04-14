@@ -15,16 +15,15 @@ class CreatePrintProductsTable extends Migration
     {
         Schema::create('print_products', function (Blueprint $table) {
             $table->id();
-            $table->string('shop');
             $table->string('title')->nullable();
-            $table->longText('body_html')->nullable();
-            $table->string('vendor')->nullable();
-            $table->string('product_type')->nullable();
-            $table->longText('tags')->nullable();
-            $table->longText('options')->nullable();
-            $table->longText('images')->nullable();
-            $table->longText('image')->nullable();
-            $table->longText('variants')->nullable();
+            $table->longText('description')->nullable();
+            $table->text('images')->nullable();
+            $table->text('thumbnail')->nullable();
+            $table->longText('sizeguide')->nullable();
+            $table->longText('designtemplate')->nullable();
+            $table->longText('shippingdetails')->nullable();
+            $table->longText('sizes')->nullable();
+            $table->float('price')->nullable();
             $table->timestamps();
         });
     }

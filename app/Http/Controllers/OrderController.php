@@ -14,7 +14,6 @@ class OrderController extends Controller
 {
     public function dashboard()
     {
-        $shop=Auth::user();
         return redirect()->route('admin.orders');
     }
 

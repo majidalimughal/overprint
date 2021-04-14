@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-Route::middleware(['auth.shopify'])->group(function(){
+Route::middleware(['auth.shopify','store'])->group(function(){
     Route::get('/', [\App\Http\Controllers\OrderController::class,'dashboard'])->name('home');
 
     Route::prefix('store')->group(function(){
@@ -37,8 +37,15 @@ Route::middleware(['auth.shopify'])->group(function(){
 });
 
 
-Route::middleware('auth')->prefix('admin')->group(function (){
+Route::middleware(['auth','admin'])->prefix('admin')->group(function (){
     Route::get('/',[\App\Http\Controllers\AdminController::class,'index'])->name('admin');
+    Route::get('/stores',[\App\Http\Controllers\AdminController::class,'stores'])->name('admin.stores');
+    Route::get('/products',[\App\Http\Controllers\AdminController::class,'products'])->name('admin.products');
+    Route::get('/products/create',[\App\Http\Controllers\AdminController::class,'productsCreate'])->name('admin.product.create');
+    Route::post('/products/store',[\App\Http\Controllers\AdminController::class,'productsSave'])->name('admin.product.store');
+    Route::get('/products/{id}/delete',[\App\Http\Controllers\AdminController::class,'productDelete'])->name('admin.product.delete');
+    Route::get('/products/{id}/edit',[\App\Http\Controllers\AdminController::class,'productEdit'])->name('admin.product.edit');
+    Route::post('/products/{id}/update',[\App\Http\Controllers\AdminController::class,'productUpdate'])->name('admin.product.update');
 });
 
 
