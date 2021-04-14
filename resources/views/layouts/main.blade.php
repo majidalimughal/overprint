@@ -14,7 +14,7 @@
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('material/assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
 @yield('styles')
-    <!-- chartist CSS -->
+<!-- chartist CSS -->
 {{--    <link href="{{asset('material/assets/plugins/chartist-js/dist/chartist.min.css')}}" rel="stylesheet">--}}
 {{--    <link href="{{asset('material/assets/plugins/chartist-js/dist/chartist-init.css')}}" rel="stylesheet">--}}
 {{--    <link href="{{asset('material/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css')}}" rel="stylesheet">--}}
@@ -48,6 +48,10 @@
         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
     </svg>
 </div>
+
+<?php
+$authUser=\Illuminate\Support\Facades\Auth::user();
+?>
 <!-- ============================================================== -->
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
@@ -126,30 +130,34 @@
 
             <nav class="sidebar-nav">
                 <ul id="sidebarnav">
-                    <li><a class="waves-effect waves-dark" href="{{route('admin')}}" aria-expanded="false"><i
-                                class="mdi mdi-home-variant"></i><span class="hide-menu">Home</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="{{route('admin.orders')}}" data-toggle="collapsed"
-                           data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i
-                                class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Stores</span></a>
-                        <ul class="collapsed" id="collapseExample">
-                            <li><a href="{{route('admin.stores')}}"><span
-                                        class="dot dot-success bg-purple"></span> All Stores</a></li>
-{{--                            <li><a href="{{route('admin.orders')}}?status="><span class="dot dot-alert"></span> New--}}
-{{--                                    Orders</a></li>--}}
-                            <li><a href="{{route('admin.orders')}}?status=fulfilled"><span
-                                        class="dot dot-primary"></span> Available Stores</a></li>
-                            <li><a href="{{route('admin.orders')}}?status=cancelled"><span
-                                        class="dot dot-warning"></span> Cancelled Orders</a></li>
+                    @if($authUser->role=='admin')
+                        <li><a class="waves-effect waves-dark" href="{{route('admin')}}" aria-expanded="false"><i
+                                    class="mdi mdi-home-variant"></i><span class="hide-menu">Home</span></a>
+                        </li>
+                        <li><a class="waves-effect waves-dark" href="{{route('admin.orders')}}" data-toggle="collapsed"
+                               data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i
+                                    class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Stores</span></a>
+                            <ul class="collapsed" id="collapseExample">
+                                <li><a href="{{route('admin.stores')}}"><span
+                                            class="dot dot-success bg-purple"></span> All Stores</a></li>
+                                {{--                            <li><a href="{{route('admin.orders')}}?status="><span class="dot dot-alert"></span> New--}}
+                                {{--                                    Orders</a></li>--}}
+                                <li><a href="{{route('admin.stores')}}?status=fulfilled"><span
+                                            class="dot dot-primary"></span> Available Stores</a></li>
+                                <li><a href="{{route('admin.stores')}}?status=cancelled"><span
+                                            class="dot dot-warning"></span> Cancelled Orders</a></li>
 
-                        </ul>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="{{route('admin.orders.index')}}" data-toggle="collapsed"
+                            </ul>
+                        </li>
+                    @endif
+                    <li><a class="waves-effect waves-dark" href="{{route('admin.orders.index')}}"
+                           data-toggle="collapsed"
                            data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i
                                 class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Orders</span></a>
                         <ul class="collapsed" id="collapseExample">
                             <li><a href="{{route('admin.orders.index')}}">All Orders</a></li>
-                            <li><a href="{{route('admin.orders.index')}}?status="><span class="dot dot-alert"></span> New
+                            <li><a href="{{route('admin.orders.index')}}?status="><span class="dot dot-alert"></span>
+                                    New
                                     Orders</a></li>
                             <li><a href="{{route('admin.orders.index')}}?status=fulfilled"><span
                                         class="dot dot-primary"></span> Completed Orders</a></li>
@@ -158,16 +166,19 @@
 
                         </ul>
                     </li>
-                    <li><a class="waves-effect waves-dark" href="{{route('admin.products')}}" aria-expanded="false"><i
-                                class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Products</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="{{route('billing.methods')}}" aria-expanded="false"><i
-                                class="mdi mdi-credit-card"></i><span class="hide-menu">Billing Methods</span></a>
-                    </li>
+                    @if($authUser->role=='admin')
+                        <li><a class="waves-effect waves-dark" href="{{route('admin.products')}}" aria-expanded="false"><i
+                                    class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Products</span></a>
+                        </li>
+                        <li><a class="waves-effect waves-dark" href="{{route('billing.methods')}}"
+                               aria-expanded="false"><i
+                                    class="mdi mdi-credit-card"></i><span class="hide-menu">Billing Methods</span></a>
+                        </li>
 
-                    <li><a class="waves-effect waves-dark" href="{{route('home')}}" aria-expanded="false"><i
-                                class="mdi mdi-help-circle"></i><span class="hide-menu">Support</span></a>
-                    </li>
+                        <li><a class="waves-effect waves-dark" href="{{route('home')}}" aria-expanded="false"><i
+                                    class="mdi mdi-help-circle"></i><span class="hide-menu">Support</span></a>
+                        </li>
+                    @endif
 
 
                     {{--<li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-account"></i><span class="hide-menu">Managment</span></a>--}}

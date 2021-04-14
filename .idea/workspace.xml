@@ -20,16 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="360ae079-3a3c-41e2-a3cc-e2c73bbbe210" name="Default Changelist" comment="15-04-2021">
-      <change afterPath="$PROJECT_DIR$/resources/views/superadmin/order-details.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/superadmin/order.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/SupplierMiddleware.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/SupplierMiddleware.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/superadmin/home.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -233,7 +226,7 @@
       <workItem from="1618306500417" duration="1834000" />
       <workItem from="1618323943670" duration="11000" />
       <workItem from="1618393156899" duration="3019000" />
-      <workItem from="1618409894272" duration="13067000" />
+      <workItem from="1618409894272" duration="14448000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1615644986126</created>
@@ -305,7 +298,14 @@
       <option name="project" value="LOCAL" />
       <updated>1618429033648</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="15-04-2021">
+      <created>1618430073694</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1618430073694</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -349,10 +349,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="504" height="446" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1618400364523" />
-    <state x="552" y="255" key="Vcs.Push.Dialog.v2" timestamp="1618429037019">
+    <state x="552" y="255" key="Vcs.Push.Dialog.v2" timestamp="1618430077759">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="255" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1618429037019" />
+    <state x="552" y="255" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1618430077759" />
     <state x="761" y="429" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1615644071689">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
