@@ -4,9 +4,9 @@
         <div class="col-md-5 col-8 align-self-center">
             <h3><strong>Orders</strong></h3>
         </div>
-        {{--        <div class="col-md-7 text-right">--}}
-        {{--            <a class="btn btn-warning" href="{{route('orders.sync')}}"> Sync New Orders </a>--}}
-        {{--        </div>--}}
+        <div class="col-md-7 text-right">
+            <a class="btn btn-warning" href="{{route('sync.Orders')}}"> Sync New Orders </a>
+        </div>
     </div>
 
 
@@ -55,7 +55,9 @@
                                 <th class="border-top-0">Fullfillment Status</th>
                                 <th class="border-top-0">Financial Status</th>
                                 <th class="border-top-0">Price</th>
-                                <th class="border-top-0">Fulfill Order</th>
+                                @isset($admin)
+                                    <th class="border-top-0">Fulfill Order</th>
+                                @endisset
                             </tr>
                             </thead>
                             <tbody id="myTable">
@@ -108,12 +110,13 @@
 
                                     </td>
 
-                                    <td align="center">
-                                        @if($order->tracking_number===null &&$order->cancelled_at===null && !in_array($order->fulfillment_status,['fulfilled','partial']))
-                                            <input type="text" name="tracking" class="form-control w-75"/>
-                                            <button class="btn btn-primary mt-1">FulFill Order</button>
-                                        @endif
-                                    </td>
+                                    @isset($admin)
+                                        <td align="center">
+                                            @if($order->cancelled_at===null && !in_array($order->fulfillment_status,['fulfilled','partial']))
+                                                <a href="{{ route('admin.order.fulfillment', $order->id) }}" class="btn btn-primary mt-1" >FulFill Order</a>
+                                            @endif
+                                        </td>
+                                    @endisset
                                 </tr>
                             @endforeach
                             </tbody>

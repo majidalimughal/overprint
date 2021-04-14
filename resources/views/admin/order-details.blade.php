@@ -152,6 +152,137 @@
             </div>
         </div>
 
+        @if($order->fulfillment_status == 'fulfilled')
+        <div class="col-md-12 my-2">
+            <div class="card p-3">
+                <div class="card-body">
+                    <h4>Fulfillments</h4>
+                    @foreach($order->fulfillments as $fulfillment)
+                        <div >
+                            <div class="d-flex justify-content-between">
+                                <h3 class="mb-0">
+                                    {{$fulfillment->name}}
+                                </h3>
+
+                                <span class="badge badge-primary align-self-basline" style="font-size: medium"> {{$fulfillment->status}}</span>
+                            </div>
+                            <div class="block-content">
+                                @if($fulfillment->tracking_number != null)
+                                    <p style="font-size: 12px">
+                                        Tracking Number : {{$fulfillment->tracking_number}} <br>
+                                        Tracking Url : {{$fulfillment->tracking_url}} <br>
+                                        Tracking Notes : {{$fulfillment->tracking_notes}} <br>
+
+                                    </p>
+                                @endif
+                                <table class="table table-borderless table-striped table-vcenter">
+                                    <thead>
+                                        <tr>
+                                            <th>Thumbnail</th>
+                                            <th>Title</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($fulfillment->line_items as $item)
+                                        <tr>
+                                        
+                                            <td><img width="200px" height="100%" class="img img-thumbnail my-2" @if($item->line_item->image!==null) src="{{$item->line_item->image}}" @else src="{{asset('img/noimg.svg')}}" @endif/></td>
+                                            
+                                            <td style="width: 60%">
+                                                @if($item->line_item != null)
+                                                    {{$item->line_item->title}}
+                                                @endif
+                                            </td>
+                                            <td> 
+                                                {{number_format($item->line_item->price,2)}}  X {{$item->fulfilled_quantity}}  USD
+                                            </td>
+
+                                            <td> 
+                                                {{number_format($item->line_item->price,2)}}
+                                            </td>
+
+                                        </tr>
+                                    @endforeach
+                                    @if($fulfillment->tracking_number == null)
+                                        <tr>
+                                            <td colspan="12" class="text-right">
+                                                <button class="btn btn-sm btn-danger" onclick="window.location.href='{{route('admin.order.fulfillment.cancel',['id'=>$order->id,'fulfillment_id'=>$fulfillment->id])}}'"> Cancel Fulfillment </button>
+                                                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add_tracking_modal{{$fulfillment->id}}"> Add tracking </button>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="add_tracking_modal{{$fulfillment->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-block-popout" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-popout" role="document">
+                                <div class="modal-content p-4">
+                                    <div class="block block-themed block-transparent mb-0">
+                                        <div class="block-header bg-primary-dark">
+                                            <h3 class="block-title">Add Tracking to Fulfillment</h3>
+                                        </div>
+                                        <form action="{{route('admin.order.fulfillment.tracking',$order->id)}}" method="post">
+                                            @csrf
+                                            <div class="p-3">
+                                                <input type="hidden" name="fulfillment[]" value="{{$fulfillment->id}}">
+                                                <div class="block">
+                                                    <div class="block-header block-header-default">
+                                                        <h3 class="block-title">
+                                                            {{$fulfillment->name}}
+                                                        </h3>
+                                                    </div>
+                                                    <div class="block-content">
+                                                        <table class="table table-borderless  table-vcenter">
+                                                            <thead>
+
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Tracking Number <span style="color: red">*</span></td>
+                                                                    <td>
+                                                                        <input type="text" required name="tracking_number[]" class="form-control" placeholder="#XXXXXX" >
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Tracking Url <span style="color: red">*</span></td>
+                                                                    <td>
+                                                                        <input type="url" required name="tracking_url[]" class="form-control" placeholder="https://example/tracking/XXXXX" value="{{ $order->courier_url }}">
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Tracking Notes</td>
+                                                                    <td>
+                                                                        <input type="text" name="tracking_notes[]" class="form-control" placeholder="Notes for this fulfillment">
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="block-content block-content-full text-right border-top">
+                                                <button type="submit" class="btn btn-sm btn-primary" >Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+
+                    @endforeach
+                </div>
+            </div>
+        </div>
+       @endif
+
         <div class="col-md-12 my-2">
             <div class="card p-3">
                 <div class="card-body">
@@ -250,7 +381,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
 @endsection
