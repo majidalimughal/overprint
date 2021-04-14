@@ -8695,3 +8695,24 @@ form .input-group {
     border:none !important;
     outline:none !important;
 }
+.display_none
+{
+    display: none !important;
+}
+
+.materialize-tags .chip
+{
+    background: #99abb4;
+    border-radius: 30px;
+    padding: .3rem .4rem!important;
+    margin:5px;
+    color: white;
+}
+.materialize-tags .material-icons {
+    display:none
+}
+
+.note-editor .note-btn
+{
+    /*display: none;*/
+}
