@@ -48,6 +48,6 @@ class Handler extends ExceptionHandler
             return response()->view('welcome', [], 200);
             // parent::report($e);
         }
-        report($e);
+        throw $e;
     }
 }
