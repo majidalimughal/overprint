@@ -9,8 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('c.jpg')}}">
-    <title>Over Print</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('c.png')}}">
+    <title>XPrintee</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('material/assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
 @yield('styles')
@@ -71,7 +71,7 @@ $authUser=\Illuminate\Support\Facades\Auth::user();
 
                         <!-- Light Logo icon -->
                         <a href="">
-                            <img src="{{asset('c.jpg')}}" alt="homepage" height="50px" width="auto" class="light-logo"/>
+                            <img src="{{asset('c.png')}}" alt="homepage" height="50px" width="auto" class="light-logo"/>
                         </a>
                     </b>
                     <!--End Logo icon -->
