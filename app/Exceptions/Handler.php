@@ -42,12 +42,11 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
-        if ($e instanceof MissingShopDomainException) {
-            // dd($e);
-            return redirect()->route('login');
-            return response()->view('welcome', [], 200);
-            // parent::report($e);
-        }
-        throw $e;
+        // if ($e instanceof MissingShopDomainException) {
+        //     // dd($e);
+        //     return redirect()->route('login');
+        //     return response()->view('welcome', [], 200);
+        //     // parent::report($e);
+        // }
     }
 }
