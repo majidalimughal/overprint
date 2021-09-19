@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,7 +38,7 @@ Route::middleware(['auth.shopify', 'store'])->group(function () {
 
         Route::post('/billing/stripe/card/save', [StripeController::class, 'saveCardDetails'])->name('save.billing.card');
 
-        Route::post('/change/mode',[HomeController::class,'changeMode'])->name('change.mode');
+        Route::post('/change/mode', [SettingController::class, 'changeMode'])->name('change.mode');
     });
 });
 
