@@ -144,13 +144,13 @@ $authUser=\Illuminate\Support\Facades\Auth::user();
                                             class="dot dot-success bg-purple"></span> All Stores</a></li>
                                 {{--                            <li><a href="{{route('admin.orders')}}?status="><span class="dot dot-alert"></span> New--}}
                                 {{--                                    Orders</a></li>--}}
-                                <li><a href="{{route('admin.stores')}}?status=fulfilled"><span
+                                {{-- <li><a href="{{route('admin.stores')}}?status=fulfilled"><span
                                             class="dot dot-primary"></span> Available Stores</a></li>
                                 <li><a href="{{route('admin.stores')}}?status=cancelled"><span
                                             class="dot dot-warning"></span> Cancelled Orders</a></li>
 
-                            </ul>
-                        </li> --}}
+                            </ul> --}}
+                        {{-- </li>  --}}
                     @endif
                     <li><a class="waves-effect waves-dark" href="{{route('admin.orders.index')}}"
                            data-toggle="collapsed"
