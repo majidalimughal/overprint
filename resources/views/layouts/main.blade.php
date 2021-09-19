@@ -136,7 +136,7 @@ $authUser=\Illuminate\Support\Facades\Auth::user();
                         <li><a class="waves-effect waves-dark" href="{{route('admin')}}" aria-expanded="false"><i
                                     class="mdi mdi-home-variant"></i><span class="hide-menu">Home</span></a>
                         </li>
-                        <li><a class="waves-effect waves-dark" href="{{route('admin.orders')}}" data-toggle="collapsed"
+                        {{-- <li><a class="waves-effect waves-dark" href="{{route('admin.orders')}}" data-toggle="collapsed"
                                data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i
                                     class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Stores</span></a>
                             <ul class="collapsed" id="collapseExample">
@@ -150,7 +150,7 @@ $authUser=\Illuminate\Support\Facades\Auth::user();
                                             class="dot dot-warning"></span> Cancelled Orders</a></li>
 
                             </ul>
-                        </li>
+                        </li> --}}
                     @endif
                     <li><a class="waves-effect waves-dark" href="{{route('admin.orders.index')}}"
                            data-toggle="collapsed"
