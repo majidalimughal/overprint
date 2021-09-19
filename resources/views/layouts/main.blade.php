@@ -38,7 +38,9 @@
 
     <![endif]-->
 </head>
-
+<?php
+$authUser=\Illuminate\Support\Facades\Auth::user();
+?>
 <body class="fix-header fix-sidebar card-no-border {{$authUser->role==='store' && $authUser->theme==='dark'?'dark':'light'}}">
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
@@ -49,9 +51,7 @@
     </svg>
 </div>
 
-<?php
-$authUser=\Illuminate\Support\Facades\Auth::user();
-?>
+
 <!-- ============================================================== -->
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
