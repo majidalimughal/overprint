@@ -15,7 +15,8 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
-        "osiset/laravel-shopify": "^16.0"
+        "osiset/laravel-shopify": "^16.0",
+        "stripe/stripe-php": "^7.97"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -133,7 +133,8 @@ class ProductController extends Controller
     public function availableProducts(Request  $request)
     {
         $ids=DB::table('products')->where('shop', Auth::user()->name)->pluck('print_product_id')->toArray();
-        $products = PrintProduct::whereNotIn('id',$ids)->paginate(20);
+        $products = PrintProduct::whereNotIn('id',array_filter($ids))->paginate(20);
+
         return view('store.build_products',compact('products'));
     }
 

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('c.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('c.jpg')}}">
     <title>Over Print</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('material/assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -39,7 +39,7 @@
     <![endif]-->
 </head>
 
-<body class="fix-header fix-sidebar card-no-border">
+<body class="fix-header fix-sidebar card-no-border {{$authUser->role==='store' && $authUser->theme==='dark'?'dark':'light'}}">
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
 <!-- ============================================================== -->
@@ -71,7 +71,7 @@ $authUser=\Illuminate\Support\Facades\Auth::user();
 
                         <!-- Light Logo icon -->
                         <a href="">
-                            <img src="{{asset('c.png')}}" alt="homepage" height="50px" width="50px" class="light-logo"/>
+                            <img src="{{asset('c.jpg')}}" alt="homepage" height="50px" width="auto" class="light-logo"/>
                         </a>
                     </b>
                     <!--End Logo icon -->
@@ -90,8 +90,7 @@ $authUser=\Illuminate\Support\Facades\Auth::user();
                 <!-- ============================================================== -->
                 <ul class="navbar-nav mr-auto mt-md-0">
                     <!-- This is  -->
-                    <li class="nav-item"><a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark"
-                                            href="javascript:void(0)"><i class="mdi mdi-menu"></i></a></li>
+                    <li class="nav-item"><input type="checkbox"/></li>
                     <!-- ============================================================== -->
                     <!-- Search -->
                     <!-- ============================================================== -->
@@ -99,21 +98,24 @@ $authUser=\Illuminate\Support\Facades\Auth::user();
                 <!-- ============================================================== -->
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
-                @if(\Illuminate\Support\Facades\Auth::user()->role!=='store')
-                    <ul class="navbar-nav my-lg-0">
-                        <!-- ============================================================== -->
-                        <!-- Profile -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark"
-                               onclick="document.getElementById('logout-form').submit();" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-power"></i>Logout</a>
-                            <form id="logout-form" action="{{route('logout')}}" method="POST">
-                                @csrf
-                            </form>
-                        </li>
-                    </ul>
-                @endif
+                <ul class="navbar-nav my-lg-0">
+                    <!-- ============================================================== -->
+                    <!-- Profile -->
+                    <!-- ============================================================== -->
+                    <li class="nav-item dropdown">
+                        <input type="checkbox"/>
+                    </li>
+                    @if(\Illuminate\Support\Facades\Auth::user()->role!=='store')
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark"
+                           onclick="document.getElementById('logout-form').submit();" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-power"></i>Logout</a>
+                        <form id="logout-form" action="{{route('logout')}}" method="POST">
+                            @csrf
+                        </form>
+                    </li>
+                    @endif
+                </ul>
             </div>
         </nav>
     </header>
@@ -170,14 +172,14 @@ $authUser=\Illuminate\Support\Facades\Auth::user();
                         <li><a class="waves-effect waves-dark" href="{{route('admin.products')}}" aria-expanded="false"><i
                                     class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Products</span></a>
                         </li>
-                        <li><a class="waves-effect waves-dark" href="{{route('billing.methods')}}"
+                        {{-- <li><a class="waves-effect waves-dark" href="{{route('billing.methods')}}"
                                aria-expanded="false"><i
                                     class="mdi mdi-credit-card"></i><span class="hide-menu">Billing Methods</span></a>
                         </li>
 
                         <li><a class="waves-effect waves-dark" href="{{route('home')}}" aria-expanded="false"><i
                                     class="mdi mdi-help-circle"></i><span class="hide-menu">Support</span></a>
-                        </li>
+                        </li> --}}
                     @endif
 
 

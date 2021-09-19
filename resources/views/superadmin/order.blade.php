@@ -5,7 +5,7 @@
             <h3><strong>Orders</strong></h3>
         </div>
         <div class="col-md-7 text-right">
-            <a class="btn btn-warning" href="{{route('sync.Orders')}}"> Sync New Orders </a>
+            <a class="btn btn-warning" href="{{route('admin.orders.synchronize')}}"> Sync New Orders </a>
         </div>
     </div>
 

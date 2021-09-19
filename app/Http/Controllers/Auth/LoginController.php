@@ -45,7 +45,7 @@ class LoginController extends Controller
             return redirect('/admin');
         }else if($user->role=='supplier')
         {
-            return redirect('/supplier');
+            return redirect('/supplier/orders');
         }else
         {
             abort(404);

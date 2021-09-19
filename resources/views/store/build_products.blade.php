@@ -1,4 +1,19 @@
 @extends('layouts.admin')
+
+@section('styles')
+    <style>
+        .image-preview {
+            width: 100%;
+            height: 400px;
+            background-size: cover !important;
+            background-position: center !important;
+            transition: all .2s;
+        }
+        .image-preview:hover{
+            /*transform: scale(1.2);*/
+        }
+    </style>
+@endsection
 @section('content')
     <div class="row page-titles">
         <div class="col-md-5 col-8 align-self-center">
@@ -29,10 +44,40 @@
     <div class="orders p-4">
         <div class="row">
             @if(count($products))
-                @foreach($products as $product)
-                    <div class="col-md-4">
+                @foreach($products as $key=>$product)
+                    <div class="col-md-3">
                         <div class="card">
-
+                            <div class="card-body">
+                                <div class="image-preview" style='background: url("{{asset($product->thumbnail)}}")'></div>
+                                <div class="p-3">
+                                    <h4>{{$product->title}}</h4>
+                                    <h6>Available Sizes: @foreach(explode(',',$product->sizes) as $size)<span class="badge badge-purple">{{$size}}</span> @endforeach</h6>
+                                    <h4><span class="font-20 font-weight-bold text-purple">$23</span><span class="font-14">/including shipping</span></h4>
+                                </div>
+                                <div class="modal fade" id="productinfo{{$key}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="exampleModalLongTitle">{{$product->title}}</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ...
+                                            </div>
+{{--                                            <div class="modal-footer">--}}
+{{--                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}
+{{--                                                <button type="button" class="btn btn-primary">Save changes</button>--}}
+{{--                                            </div>--}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white text-center">
+                                <button class="btn btn-primary mx-1" data-toggle="modal" data-target="#productinfo{{$key}}">Product Info</button>
+                                <button class="btn btn-primary mx-1">Create Product</button>
+                            </div>
                         </div>
                     </div>
                 @endforeach

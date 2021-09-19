@@ -21,83 +21,74 @@ class OrderController extends Controller
 
     public function orders(Request  $request)
     {
-        $shop=Auth::user();
-        $status=null;
-        $orders=Order::where('shop',$shop->name)->newQuery();
-        if ($request->input('status'))
-        {
-            $status=$request->input('status');
+        $shop = Auth::user();
+        $status = null;
+        $orders = Order::where('shop', $shop->name)->newQuery();
+        if ($request->input('status')) {
+            $status = $request->input('status');
         }
-        if($status=='cancelled')
-        {
-            $orders=$orders->whereNotNull('cancelled_at')->paginate(30);
+        if ($status == 'cancelled') {
+            $orders = $orders->whereNotNull('cancelled_at')->paginate(30);
+        } else {
+            $orders = $orders->where('fulfillment_status', $status)->whereNull('cancelled_at')->paginate(30);
         }
-        else
-        {
-            $orders=$orders->where('fulfillment_status',$status)->whereNull('cancelled_at')->paginate(30);
-        }
-        $orders->append(['status'=>$request->input('status')]);
-        return view('admin.order',compact('orders'));
+        $orders->append(['status' => $request->input('status')]);
+        return view('admin.order', compact('orders'));
     }
     public function SynchronizeOrders()
     {
         $shop = Auth::user();
-        $date = Carbon::today()->subYear(10)->format('Y-m-d');
-        $count = $shop->api()->rest('GET', '/admin/orders/count.json',[
-            'status'=>'any',
-            'created_at_min'=>$date
+        $date = Carbon::today()->subYear(1)->format('Y-m-d');
+        // dd($shop);
+        $count = $shop->api()->rest('GET', '/admin/orders/count.json', [
+            'status' => 'any',
+            'created_at_min' => $date
         ]);
         $count = floatval($count['body']['count']);
+        // dd($count);
         $count = ceil($count / 250);
         $next = '';
         for ($i = 1; $i <= $count; ++$i) {
 
-            if($i==1)
-            {
-                $orders = $shop->api()->rest('GET', '/admin/api/2020-04/orders.json', [
+            if ($i == 1) {
+                $orders = $shop->api()->rest('GET', '/admin/orders.json', [
                     'limit' => 250,
-                    'status'=>'any',
-                    'created_at_min'=>$date
+                    'status' => 'any',
+                    'created_at_min' => $date
                 ]);
+                // dd($orders);
 
-                if (isset($orders['errors']) && !$orders['errors']) {
-                    {
-                        if(isset($orders['link']['next']))
-                        {
+                if (isset($orders['errors']) && !$orders['errors']) { {
+                        if (isset($orders['link']['next'])) {
                             $next = $orders['link']['next'];
                         }
                         $orders = $orders['body']['orders'];
                         foreach ($orders as $order) {
                             $this->CreateOrder($order, $shop->name);
                         }
-
                     }
                 }
-            }else
-            {
+            } else {
                 $orders = $shop->api()->rest('GET', '/admin/orders.json', [
                     'limit' => 250,
                     'page_info' => $next
                 ]);
-                if (isset($orders['errors']) && !$orders['errors']) {
-                    {
+                if (isset($orders['errors']) && !$orders['errors']) { {
                         $next = $orders['link']['next'];
                         $orders = $orders['body']['orders'];
 
                         foreach ($orders as $order) {
                             $this->CreateOrder($order, $shop->name);
                         }
-
                     }
                 }
             }
         }
 
-
-
+        return redirect()->back()->with('success', 'Orders are being synchronized');
     }
 
-    public function CreateOrder($order, $shop, $properties = null,$payment=null)
+    public function CreateOrder($order, $shop, $properties = null, $payment = null)
     {
         try {
 
@@ -110,12 +101,11 @@ class OrderController extends Controller
                 $ord->shopify_order_id = $order->id;
             }
             $ord->name = $order->order_number;
-            $ord->created_at=Carbon::createFromTimeString($order->created_at)->format('Y-m-d H:i:s');
-            $ord->updated_at=Carbon::createFromTimeString($order->updated_at)->format('Y-m-d H:i:s');
-            if($order->cancelled_at)
-            {
-                $ord->cancelled_at=Carbon::createFromTimeString($order->cancelled_at)->format('Y-m-d H:i:s');
-                $ord->status='cancelled';
+            $ord->created_at = Carbon::createFromTimeString($order->created_at)->format('Y-m-d H:i:s');
+            $ord->updated_at = Carbon::createFromTimeString($order->updated_at)->format('Y-m-d H:i:s');
+            if ($order->cancelled_at) {
+                $ord->cancelled_at = Carbon::createFromTimeString($order->cancelled_at)->format('Y-m-d H:i:s');
+                $ord->status = 'cancelled';
             }
             $ord->email = $order->email;
             $ord->price = $order->total_price;
@@ -126,9 +116,8 @@ class OrderController extends Controller
             $ord->fulfillment_status = $order->fulfillment_status;
 
             $ord->discount_amount = $order->total_discounts;
-            if($payment!==null)
-            {
-                $ord->payment =json_encode($payment);
+            if ($payment !== null) {
+                $ord->payment = json_encode($payment);
             }
             if (isset($order->shipping_address)) {
                 $ord->shipping_address = json_encode($order->shipping_address);
@@ -191,7 +180,6 @@ class OrderController extends Controller
                     } else {
                         $lineItem->image = (isset($product->image->src) ? $product->image->src : asset('img/noimg.svg'));
                     }
-
                 }
                 $lineItem->save();
             }
@@ -200,35 +188,32 @@ class OrderController extends Controller
         } catch (\Exception $exception) {
             dd($exception);
         }
-
     }
 
 
     public function orderDetail($id)
     {
-        $order=Order::find($id);
-        if ($order)
-        {
-            return view('admin.order-details',compact('order'));
+        $order = Order::find($id);
+        if ($order) {
+            return view('admin.order-details', compact('order'));
         }
         abort(404);
     }
 
     public function orderFulfillment($id)
     {
-        $order=Order::find($id);
-        if ($order)
-        {
-            return view('admin.order-fulfillment',compact('order'));
+        $order = Order::find($id);
+        if ($order) {
+            return view('admin.order-fulfillment', compact('order'));
         }
         abort(404);
     }
 
     public function plans()
     {
-        $plans=Plan::all();
-        $shop=Auth::user();
-        return view('admin.pricing',compact('plans','shop'));
+        $plans = Plan::all();
+        $shop = Auth::user();
+        return view('admin.pricing', compact('plans', 'shop'));
     }
 
     public function processOrderFulfillment(Request $request, $id)
@@ -239,15 +224,15 @@ class OrderController extends Controller
         if ($order != null) {
             if ($order->financial_status == 'paid') {
                 $fulfillable_quantities = $request->input('item_fulfill_quantity');
-                
+
 
                 $shop = User::where('name', $order->shop)->first();
                 Auth::login($shop);
-                
+
                 $shopify_fulfillment = null;
                 if ($shop != null) {
                     $location_response = json_decode(json_encode($shop->api()->rest('GET', '/admin/locations.json')));
-                                                        
+
                     if (!$location_response->errors) {
 
                         foreach ($location_response->body->locations as $location) {
@@ -257,8 +242,7 @@ class OrderController extends Controller
                                         "location_id" => $location->id,
                                         "tracking_number" => null,
                                         "notify_customer" => false,
-                                        "line_items" => [
-                                        ]
+                                        "line_items" => []
                                     ]
                                 ];
                             }
@@ -274,11 +258,11 @@ class OrderController extends Controller
                             }
                         }
 
-                        
+
                         $response = json_decode(json_encode($shop->api()->rest('POST', '/admin/orders/' . $order->shopify_order_id . '/fulfillments.json', $data)));
 
                         if ($response->errors) {
-                            if(strpos($response->body->base[0], "already fulfilled") !== false){
+                            if (strpos($response->body->base[0], "already fulfilled") !== false) {
                                 $res = json_decode(json_encode($shop->api()->rest('GET', '/admin/orders/' . $order->shopify_order_id . '/fulfillments.json')));
                                 Auth::login($admin);
                                 return $this->set_fulfilments_for_already_fulfilled_order($request, $id, $fulfillable_quantities, $order, $res);
@@ -297,7 +281,6 @@ class OrderController extends Controller
                     Auth::login($admin);
                     return redirect()->back()->with('error', 'Order Related Store Not Found');
                 }
-               
             } else {
                 Auth::login($admin);
                 return redirect()->back()->with('error', 'Refunded Order Cant Be Processed Fulfillment');
@@ -306,7 +289,6 @@ class OrderController extends Controller
             Auth::login($admin);
             return redirect()->back()->with('error', 'Order Not Found To Process Fulfillment');
         }
-
     }
 
 
@@ -317,7 +299,6 @@ class OrderController extends Controller
             if ($line_item != null && $fulfillable_quantities[$index] > 0) {
                 if ($fulfillable_quantities[$index] == $line_item->fulfillable_quantity) {
                     $line_item->fulfillment_status = 'fulfilled';
-
                 } else if ($fulfillable_quantities[$index] < $line_item->fulfillable_quantity) {
                     $line_item->fulfillment_status = 'partially-fulfilled';
                 }
@@ -355,7 +336,6 @@ class OrderController extends Controller
             if ($line_item != null && $fulfillable_quantities[$index] > 0) {
                 if ($fulfillable_quantities[$index] == $line_item->fulfillable_quantity) {
                     $line_item->fulfillment_status = 'fulfilled';
-
                 } else if ($fulfillable_quantities[$index] < $line_item->fulfillable_quantity) {
                     $line_item->fulfillment_status = 'partially-fulfilled';
                 }
@@ -381,7 +361,6 @@ class OrderController extends Controller
                 $fulfillment_line_item->order_fulfillment_id = $fulfillment->id;
                 $fulfillment_line_item->order_line_item_id = $item;
                 $fulfillment_line_item->save();
-
             }
         }
 
@@ -399,47 +378,44 @@ class OrderController extends Controller
         Auth::login($shop);
 
         if ($order != null) {
-           
-                $fulfillments = $request->input('fulfillment');
-                $tracking_numbers = $request->input('tracking_number');
-                $tracking_urls = $request->input('tracking_url');
-                $tracking_notes = $request->input('tracking_notes');
 
-                
-                if ($shop != null) {
-                    foreach ($fulfillments as $index => $f) {
-                        $current = OrderFulfillment::find($f);
-                        if ($current != null) {
-                            $data = [
-                                "fulfillment" => [
-                                    "tracking_number" => $tracking_numbers[$index],
-                                    "tracking_url" => $tracking_urls[$index],
-                                    "notify_customer" => false,
-                                ]
-                            ];
-                           
-                            $response = json_decode(json_encode($shop->api()->rest('PUT', '/admin/orders/' . $order->shopify_order_id . '/fulfillments/' . $current->fulfillment_shopify_id . '.json', $data)));
+            $fulfillments = $request->input('fulfillment');
+            $tracking_numbers = $request->input('tracking_number');
+            $tracking_urls = $request->input('tracking_url');
+            $tracking_notes = $request->input('tracking_notes');
 
-                            if (!$response->errors) {
-                                $current->tracking_number = $tracking_numbers[$index];
-                                $current->tracking_url = $tracking_urls[$index];
-                                $current->tracking_notes = $tracking_notes[$index];
-                                
-                                $current->save();
-                                $this->CompleteFullFillment($current, $shop);
-                                
-                            }
+
+            if ($shop != null) {
+                foreach ($fulfillments as $index => $f) {
+                    $current = OrderFulfillment::find($f);
+                    if ($current != null) {
+                        $data = [
+                            "fulfillment" => [
+                                "tracking_number" => $tracking_numbers[$index],
+                                "tracking_url" => $tracking_urls[$index],
+                                "notify_customer" => false,
+                            ]
+                        ];
+
+                        $response = json_decode(json_encode($shop->api()->rest('PUT', '/admin/orders/' . $order->shopify_order_id . '/fulfillments/' . $current->fulfillment_shopify_id . '.json', $data)));
+
+                        if (!$response->errors) {
+                            $current->tracking_number = $tracking_numbers[$index];
+                            $current->tracking_url = $tracking_urls[$index];
+                            $current->tracking_notes = $tracking_notes[$index];
+
+                            $current->save();
+                            $this->CompleteFullFillment($current, $shop);
                         }
                     }
-                } else {
-                    Auth::login($admin);
-                    return redirect()->back()->with('error', 'Order Related Store Not Found');
                 }
+            } else {
                 Auth::login($admin);
-                return redirect()->back()->with('success', 'Tracking Details Added To Fulfillment Successfully!');
-            
-        }
-        else {
+                return redirect()->back()->with('error', 'Order Related Store Not Found');
+            }
+            Auth::login($admin);
+            return redirect()->back()->with('success', 'Tracking Details Added To Fulfillment Successfully!');
+        } else {
             Auth::login($admin);
             return redirect()->back()->with('error', 'Order Not Found To Add Tracking In Fulfillment');
         }
@@ -452,8 +428,5 @@ class OrderController extends Controller
         if ($orderFullfillment->fulfillment_shopify_id) {
             $shop->api()->rest('POST', '/admin/orders/' . $order->shopify_order_id . '/fulfillments/' . $orderFullfillment->fulfillment_shopify_id . '/complete.json');
         }
-
     }
-
-
 }

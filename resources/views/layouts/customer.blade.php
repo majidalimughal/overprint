@@ -37,8 +37,8 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-
-<body class="fix-header fix-sidebar card-no-border cs-body">
+@php $authUser=Auth::user(); @endphp
+<body class="fix-header fix-sidebar card-no-border cs-body {{$authUser->role==='store' && $authUser->dark===true?'dark':'light'}}">
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
 <!-- ============================================================== -->
@@ -65,7 +65,7 @@
 
                         <!-- Light Logo icon -->
                         <a href="{{route('customer.check')}}">
-                            <img src="{{asset('c.png')}}" alt="homepage" height="50px" width="50px" class="light-logo" />
+                            <img src="{{asset('c.png')}}" alt="homepage" height="50px" width="auto" class="light-logo" />
                         </a>
                     </b>
                     <!--End Logo icon -->

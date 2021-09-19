@@ -8,8 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('c.png')}}">
+
     <title>Over Print</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('material/assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -34,10 +36,14 @@
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
 
-<body class="fix-header fix-sidebar card-no-border">
+
+    <![endif]-->
+
+    @yield('styles')
+</head>
+@php $authUser=Auth::user(); @endphp
+<body class="fix-header fix-sidebar card-no-border  {{$authUser->role==='store' && $authUser->dark==true?'dark':'light'}}">
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
 <!-- ============================================================== -->
@@ -65,7 +71,7 @@
 
                         <!-- Light Logo icon -->
                         <a href="">
-                            <img src="{{asset('c.png')}}" alt="homepage" height="50px" width="50px" class="light-logo"/>
+                            <img src="{{asset('c.png')}}" alt="homepage" height="50px" width="auto" class="light-logo"/>
                         </a>
                     </b>
                     <!--End Logo icon -->
@@ -84,8 +90,9 @@
                 <!-- ============================================================== -->
                 <ul class="navbar-nav mr-auto mt-md-0">
                     <!-- This is  -->
-                    <li class="nav-item"><a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark"
-                                            href="javascript:void(0)"><i class="mdi mdi-menu"></i></a></li>
+                    {{-- <li class="nav-item">
+                        <input type="checkbox"/>
+                    </li> --}}
                     <!-- ============================================================== -->
                     <!-- Search -->
                     <!-- ============================================================== -->
@@ -93,11 +100,26 @@
                 <!-- ============================================================== -->
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
+
+                <ul class="navbar-nav my-lg-0">
+                    <!-- ============================================================== -->
+                    <!-- Profile -->
+                    <!-- ============================================================== -->
+                    
+                    <li class="nav-item dropdown">
+                        <div class="custom-control custom-switch">
+                            <input oninput="changeMode(this)" type="checkbox" @if($authUser->dark==true) checked @endif class="custom-control-input" id="customSwitch1">
+                            <label class="custom-control-label" for="customSwitch1">Dark Mode</label>
+                          </div>
+                    </li>
+                </ul>
+
                 @if(\Illuminate\Support\Facades\Auth::user()->role!=='store')
                     <ul class="navbar-nav my-lg-0">
                         <!-- ============================================================== -->
                         <!-- Profile -->
                         <!-- ============================================================== -->
+                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark"
                                onclick="document.getElementById('logout-form').submit();" data-toggle="dropdown"
@@ -232,31 +254,38 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script>
 
-<!-- ============================================================== -->
-<!-- This page plugins -->
-<!-- ============================================================== -->
-<!-- chartist chart -->
-{{--<script src="{{asset('material/assets/plugins/chartist-js/dist/chartist.min.js')}}"></script>--}}
-{{--<script src="{{asset('material/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js')}}"></script>--}}
-<!--c3 JavaScript -->
-{{--<script src="{{asset('material/assets/plugins/d3/d3.min.js')}}"></script>--}}
-{{--<script src="{{asset('material/assets/plugins/c3-master/c3.min.js')}}"></script>--}}
-{{--Sweet Alert--}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
-<!-- Chart JS -->
-{{--<script src="{{asset('material/js/dashboard1.js')}}"></script>--}}
-{{--<script src="{{asset('js/script.js')}}"></script>--}}
-
-{{--<script>--}}
-{{--    $(function () {--}}
-{{--        $('[data-toggle="tooltip"]').tooltip()--}}
-{{--    })--}}
-{{--</script>--}}
 
 
 @yield('js')
+
+<script>
+     changeMode=(element)=>
+    {
+        $.ajax({
+            url:"{{route('change.mode')}}",
+            type:"POST",
+            data:{
+                _token:$("#csrf-token")[0].content,
+                dark:$(element).is(':checked')
+            },
+            success:function(response)
+            {
+                if($(element).is(':checked'))
+                {
+                    $('body').removeClass('light');
+                    $('body').addClass('dark');
+                }else 
+                {
+                    $('body').removeClass('dark');
+                    $('body').addClass('light');
+                }
+            }
+        });
+    }
+</script>
 
 </body>
 

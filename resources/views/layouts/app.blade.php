@@ -64,7 +64,7 @@
 
                         <!-- Light Logo icon -->
                         <a href="">
-                            <img src="{{asset('c.png')}}" alt="homepage" height="50px" width="50px" class="light-logo"  />
+                            <img src="{{asset('c.png')}}" alt="homepage" height="50px" width="auto" class="light-logo"  />
                         </a>
                     </b>
                     <!--End Logo icon -->
