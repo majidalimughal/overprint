@@ -139,7 +139,7 @@ class ProductController extends Controller
     public function createShopifyProduct($id)
     {
         $id = decrypt($id);
-        $product = Product::find($id);
+        $product = PrintProduct::find($id);
         if ($product !== null) {
             return view('store.create_product', compact('product'));
         }

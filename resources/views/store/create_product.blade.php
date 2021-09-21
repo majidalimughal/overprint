@@ -60,7 +60,8 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-12">
-                                    <textarea class="summernote" name="description"
+                                    {{-- @dd($product) --}}
+                                    <textarea class="summernote" name="description" 
                                               placeholder="Please Enter Description here !">{{$product->description}}</textarea>
                                 </div>
                             </div>
@@ -92,13 +93,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Price</label>
-                                        <input type="number" step="any" class="form-control" name="price" placeholder="$ 0.00" required>
+                                        <input type="number" step="any" value="{{$product->price}}" class="form-control" name="price" placeholder="$ 0.00" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 ">
                                     <div class="form-group">
                                         <label>Cost Per Item</label>
-                                        <input type="number" step="any" class="form-control" name="cost"
+                                        <input type="number" step="any" value="{{$product->price}}" class="form-control" name="cost"
                                                placeholder="$ 0.00">
                                     </div>
                                 </div>
@@ -121,7 +122,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <div class="col-xs-12 ">
@@ -142,7 +143,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
