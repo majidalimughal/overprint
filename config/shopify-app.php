@@ -313,10 +313,10 @@ return [
         //     'topic' => 'orders/create',
         //     'address' => 'https://dev.xprintee.com/webhook/order-create-update'
         // ],
-        [
-            'topic' => 'orders/updated',
-            'address' => 'https://dev.xprintee.com/webhook/order-update'
-        ],
+        // [
+        //     'topic' => 'orders/updated',
+        //     'address' => 'https://dev.xprintee.com/webhook/order-update'
+        // ],
         [
             'topic' => 'products/create',
             'address' => 'https://dev.xprintee.com/webhook/product-create'
