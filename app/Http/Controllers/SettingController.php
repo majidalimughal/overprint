@@ -27,7 +27,8 @@ class SettingController extends Controller
     public function changeMode(Request $request)
     {
         $dark = $request->dark;
-        $shop = User::find(Auth::id());
+        $user_id = $request->shop_id;
+        $shop = User::find($user_id);
         $shop->dark = $dark;
         $shop->save();
         return response()->json([

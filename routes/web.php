@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,8 @@ Route::middleware(['auth.shopify', 'store'])->group(function () {
 
         Route::get('/shopify/synchronize/products', [\App\Http\Controllers\ProductController::class, 'synchronzeProducts'])->name('shopify.synchronize.products');
         Route::get('shopify/products', [\App\Http\Controllers\ProductController::class, 'index'])->name('shopify.products');
+
+        Route::get('/app/product/{id}/create', [ProductController::class, 'createShopifyProduct'])->name('build.product.shopify');
 
         Route::get('/app/products', [\App\Http\Controllers\ProductController::class, 'availableProducts'])->name('available.products');
 

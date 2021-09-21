@@ -1,6 +1,22 @@
 
 $(document).ready(function(){
 
+    
+
+    $('.nav-tabs .nav-link').on('click',function(){
+
+        $('.nav-tabs .nav-link').not(this).removeClass('active');
+        $(this).addClass('active');
+        $('.tab-content .tab-pane').removeClass('show');
+        $('.tab-content .tab-pane').removeClass('active');
+        var tab_id=$(this).attr('href');
+        $(tab_id).addClass('show');
+        $(tab_id).addClass('active');
+
+    })
+
+
+
     if($('.select_ajax_reload').length > 0) {
         if ($('.select_ajax_reload').val().length > 0) {
             $('.drag-table tbody').addClass('Selected');

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('c.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('favicon.png')}}">
     <title>XPrintee</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('material/assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -136,21 +136,21 @@ $authUser=\Illuminate\Support\Facades\Auth::user();
                         <li><a class="waves-effect waves-dark" href="{{route('admin')}}" aria-expanded="false"><i
                                     class="mdi mdi-home-variant"></i><span class="hide-menu">Home</span></a>
                         </li>
-                        {{-- <li><a class="waves-effect waves-dark" href="{{route('admin.orders')}}" data-toggle="collapsed"
+                        <li><a class="waves-effect waves-dark" href="{{route('admin.orders')}}" data-toggle="collapsed"
                                data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i
                                     class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Stores</span></a>
                             <ul class="collapsed" id="collapseExample">
                                 <li><a href="{{route('admin.stores')}}"><span
                                             class="dot dot-success bg-purple"></span> All Stores</a></li>
-                                {{--                            <li><a href="{{route('admin.orders')}}?status="><span class="dot dot-alert"></span> New--}}
-                                {{--                                    Orders</a></li>--}}
-                                {{-- <li><a href="{{route('admin.stores')}}?status=fulfilled"><span
+                                                           <li><a href="{{route('admin.orders')}}?status="><span class="dot dot-alert"></span> New
+                                                                   Orders</a></li>
+                                <li><a href="{{route('admin.stores')}}?status=fulfilled"><span
                                             class="dot dot-primary"></span> Available Stores</a></li>
                                 <li><a href="{{route('admin.stores')}}?status=cancelled"><span
                                             class="dot dot-warning"></span> Cancelled Orders</a></li>
 
-                            </ul> --}}
-                        {{-- </li>  --}}
+                            </ul>
+                        </li> 
                     @endif
                     <li><a class="waves-effect waves-dark" href="{{route('admin.orders.index')}}"
                            data-toggle="collapsed"
@@ -231,7 +231,7 @@ $authUser=\Illuminate\Support\Facades\Auth::user();
 <!-- Bootstrap tether Core JavaScript -->
 <script src="{{asset('material/assets/plugins/bootstrap/js/tether.min.js')}}"></script>
 <script src="{{asset('material/assets/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
-{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>--}}
+<script src="{{asset('material/assets/plugins/bootstrap/js/popper.min.js')}}"></script>
 <!-- slimscrollbar scrollbar JavaScript -->
 <script src="{{asset('material/js/jquery.slimscroll.js')}}"></script>
 <!--Wave Effects -->

@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('c.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('favicon.png')}}">
 
     <title>XPrintee</title>
     <!-- Bootstrap Core CSS -->
@@ -236,7 +236,8 @@
 <!-- Bootstrap tether Core JavaScript -->
 <script src="{{asset('material/assets/plugins/bootstrap/js/tether.min.js')}}"></script>
 <script src="{{asset('material/assets/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
-{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+{{-- <script src="{{asset('material/assets/plugins/bootstrap/js/popper.min.js')}}"></script> --}}
 <!-- slimscrollbar scrollbar JavaScript -->
 <script src="{{asset('material/js/jquery.slimscroll.js')}}"></script>
 <!--Wave Effects -->
@@ -269,7 +270,8 @@
             type:"POST",
             data:{
                 _token:$("#csrf-token")[0].content,
-                dark:$(element).is(':checked')
+                dark:$(element).is(':checked')?1:0,
+                shop_id:'{{Auth::id()}}'
             },
             success:function(response)
             {

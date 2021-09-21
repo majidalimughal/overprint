@@ -55,7 +55,7 @@
                                     <h4><span class="font-20 font-weight-bold text-purple">$23</span><span class="font-14">/including shipping</span></h4>
                                 </div>
                                 <div class="modal fade" id="productinfo{{$key}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                    <div class="modal-dialog modal-lg modal-dialog-centered max-width-70" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h4 class="modal-title" id="exampleModalLongTitle">{{$product->title}}</h4>
@@ -64,19 +64,121 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                ...
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                                            <ol class="carousel-indicators">
+                                                                @foreach ($product->images as $index=>$image)
+                                                                <li data-target="#carouselExampleIndicators" data-slide-to="{{$index}}" class="{{$index===0?'active':''}}"></li>
+                                                                @endforeach
+                                                              
+                                                              {{-- <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                                              <li data-target="#carouselExampleIndicators" data-slide-to="2"></li> --}}
+                                                            </ol>
+                                                            <div class="carousel-inner">
+                                                              
+                                                              @foreach ($product->images as $index=>$image)
+                                                                <div class="carousel-item {{$index===0?'active':''}}">
+                                                                    <img width="auto" height="500px" class="d-block w-100" src="{{asset($image)}}" alt="First slide">
+                                                                </div>
+                                                              @endforeach
+                                                            </div>
+                                                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                              <span class="sr-only">Previous</span>
+                                                            </a>
+                                                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                              <span class="sr-only">Next</span>
+                                                            </a>
+                                                          </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h2>Product Description</h2>
+                                                        <div class="product-description">
+                                                            {!! $product->description!!}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 mt-5">
+                                                        <!-- Tabs navs -->
+<ul class="nav nav-tabs nav-fill mb-3" id="ex1" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link active"
+        id="ex2-tab-1"
+        data-mdb-toggle="tab"
+        href="#ex2-tabs-1"
+        role="tab"
+        aria-controls="ex2-tabs-1"
+        aria-selected="true"
+        >Size Guide</a
+      >
+    </li>
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link"
+        id="ex2-tab-2"
+        data-mdb-toggle="tab"
+        href="#ex2-tabs-2"
+        role="tab"
+        aria-controls="ex2-tabs-2"
+        aria-selected="false"
+        >Design Template</a
+      >
+    </li>
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link"
+        id="ex2-tab-3"
+        data-mdb-toggle="tab"
+        href="#ex2-tabs-3"
+        role="tab"
+        aria-controls="ex2-tabs-3"
+        aria-selected="false"
+        >Shipping DEtails</a
+      >
+    </li>
+  </ul>
+  <!-- Tabs navs -->
+  
+  <!-- Tabs content -->
+  <div class="tab-content" id="ex2-content">
+    <div
+      class="tab-pane fade show active"
+      id="ex2-tabs-1"
+      role="tabpanel"
+      aria-labelledby="ex2-tab-1"
+    >
+      {!!$product->sizeguide!!}
+    </div>
+    <div
+      class="tab-pane fade"
+      id="ex2-tabs-2"
+      role="tabpanel"
+      aria-labelledby="ex2-tab-2"
+    >
+      {!!$product->designtemplate!!}
+    </div>
+    <div
+      class="tab-pane fade"
+      id="ex2-tabs-3"
+      role="tabpanel"
+      aria-labelledby="ex2-tab-3"
+    >
+      {!!$product->shippingdetails!!}
+    </div>
+  </div>
+  <!-- Tabs content -->
+                                                    </div>
+                                                </div>
                                             </div>
-{{--                                            <div class="modal-footer">--}}
-{{--                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}
-{{--                                                <button type="button" class="btn btn-primary">Save changes</button>--}}
-{{--                                            </div>--}}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer bg-white text-center">
                                 <button class="btn btn-primary mx-1" data-toggle="modal" data-target="#productinfo{{$key}}">Product Info</button>
-                                <button class="btn btn-primary mx-1">Create Product</button>
+                                <a href="{{route('build.product.shopify',encrypt($product->id))}}" class="btn btn-primary mx-1">Create Product</a>
                             </div>
                         </div>
                     </div>
