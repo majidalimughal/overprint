@@ -305,10 +305,10 @@ return [
     */
 
     'webhooks' => [
-        [
-            'topic' => 'app-uninstalled',
-            'address' => 'https://dev.xprintee.com/webhook/app-uninstalled'
-        ],
+        // [
+        //     'topic' => 'app-uninstalled',
+        //     'address' => 'https://dev.xprintee.com/webhook/app-uninstalled'
+        // ],
         [
             'topic' => 'orders/create',
             'address' => 'https://dev.xprintee.com/webhook/order-create-update'
