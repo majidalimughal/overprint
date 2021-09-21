@@ -321,5 +321,9 @@
             height:'250px'
         });
     })
+    $('body').on('click','.dropzone',function () {
+        $('.images-upload').trigger('click');
+    });
+    
 </script>
 @endsection

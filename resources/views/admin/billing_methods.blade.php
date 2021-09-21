@@ -5,10 +5,18 @@
 @endsection
 @section('content')
 @php 
-$name=explode(' ',$billing->name);
+
+if(isset($billing->name))
+{
+  $name=explode(' ',$billing->name);
 $first_name=(isset($name[0])?$name[0]:'');;
 
 $last_name=(isset($name[1])?$name[1]:'');
+}
+else 
+{
+  $first_name=$last_name='';
+}
 @endphp
     <div class="row page-titles px-5">
         <div class="col-md-12 col-12 align-self-center">
