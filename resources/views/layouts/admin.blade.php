@@ -31,6 +31,7 @@
 
     <!-- You can change the theme colors from here -->
     <link href="{{asset('material/css/colors/blue.css')}}" id="theme" rel="stylesheet">
+    <link href="{{ asset('tagsinput/tagsinput.min.css') }}" rel="stylesheet"/>>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -258,6 +259,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+
+<script src="{{ asset('tagsinput/tagsinput.min.js') }}"></script>
 
 
 @yield('js')

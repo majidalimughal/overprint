@@ -2,6 +2,7 @@
 
 @section('styles')
 
+
 @endsection
 @section('content')
 @php 

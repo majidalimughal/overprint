@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BillingDetail;
 use App\Models\Order;
 use App\Models\User;
 use Carbon\Carbon;
@@ -9,10 +10,23 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function handleCharge($order_id,$shop_id)
+    public function deductCommission($products, $shop)
     {
-        $order=Order::find($order_id);
-        $shop=User::find($shop_id);
+        $amount = 0;
+        foreach ($products as $product) {
+            $amount += $product->sale;
+        }
+        $billingDetail = BillingDetail::where('shop_id', $shop->id)->first();
+        if ($billingDetail !== null) {
+            if ($billingDetail->stripe_customer_id !== null) {
+                $stripe = new StripeController();
+                $stripe->payCharge($billingDetail, $amount);
+                return true;
+            } else {
+                return true;
+            }
+        }
 
+        return false;
     }
 }

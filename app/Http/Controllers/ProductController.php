@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -87,6 +88,7 @@ class ProductController extends Controller
         $Product->variants = json_encode($variants);
 
         $Product->save();
+        return $Product;
     }
     public function index(Request  $request)
     {
@@ -142,5 +144,113 @@ class ProductController extends Controller
             return view('store.create_product', compact('product'));
         }
         abort(404);
+    }
+
+
+    public function storeShopifyProduct($id, Request $request)
+    {
+        // dd($request->all());
+
+
+
+        $shop = Auth::user();
+
+        if ($shop->billingDetails === null) {
+            return back()->with('error', 'Please add billing details');
+        }
+        $variantsArray = $this->makeVariants($request);
+        $optionsArray = $this->makeOptions($request);
+        $imagesArray = $this->makeImages($request);
+        $product = $shop->api()->rest('POST', '/admin/products.json', [
+            'product' => [
+                "title" => $request->title,
+                "body_html" => $request->description,
+                "vendor" => $request->vendor,
+                "tags" => $request->tags,
+                "product_type" => $request->product_type,
+                "variants" => $variantsArray,
+                "options" => $optionsArray,
+                "images" => $imagesArray,
+                "status" =>  $request->status == 1 ? 'active' : 'draft'
+            ]
+        ]);
+
+        if (isset($product['body']['product'])) {
+            $pro = $this->CreateUpdateProduct($product['body']['product'], $shop->name, $id);
+            return redirect()->route('shopify.product.detail', encrypt($pro->id))->with('success', 'Product Created');
+        } else {
+            return back()->with('error', 'Something went wrong');
+        }
+    }
+
+
+    public function makeImages($request)
+    {
+        $images = [];
+        foreach ($request->file('images') as $image) {
+            $image = Storage::disk('public')->put('uploads', $image);
+            array_push($images, asset($image));
+        }
+        return $images;
+    }
+
+
+    public function makeOptions($request)
+    {
+        $options = [];
+
+        if ($request->attribute1 !== null) {
+            array_push($options, [
+                'name' => $request->attribute1,
+                'values' => explode(',', $request->option1)
+            ]);
+        }
+
+        if ($request->attribute2 !== null) {
+            array_push($options, [
+                'name' => $request->attribute2,
+                'values' => explode(',', $request->option2)
+            ]);
+        }
+
+        if ($request->attribute3 !== null) {
+            array_push($options, [
+                'name' => $request->attribute3,
+                'values' => explode(',', $request->option3)
+            ]);
+        }
+
+        return $options;
+    }
+
+
+
+    public function makeVariants($request)
+    {
+        $variants_array = [];
+        $titles = $request->variant_title;
+        $prices = $request->variant_price;
+        $costs = $request->variant_cost;
+        $quantities = $request->variant_quantity;
+        $skus = $request->variant_sku;
+        $barcodes = $request->variant_barcode;
+        foreach ($titles as $index => $title) {
+            $options = explode('/', $title);
+            array_push($variants_array, [
+                'title' => $title,
+                'sku' => $skus[$index],
+                'option1' => isset($options[0]) ? $options[0] : null,
+                'option2' => isset($options[1]) ? $options[1] : null,
+                'option3' => isset($options[2]) ? $options[2] : null,
+                'inventory_quantity' => $quantities[$index],
+                // 'grams' => $product->weight * 1000,
+                // 'weight' => $product->weight,
+                // 'weight_unit' => 'kg',
+                'barcode' => $barcodes[$index],
+                'price' => $prices[$index],
+                'cost' => $costs[$index],
+            ]);
+        }
+        return $variants_array;
     }
 }

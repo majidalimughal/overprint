@@ -9,6 +9,8 @@ use App\Models\LineItem;
 use Illuminate\Http\Request;
 use App\Models\OrderFulfillment;
 use App\Models\FulfillmentLineItem;
+use App\Models\Product;
+use App\Models\ProductSale;
 use Illuminate\Support\Facades\Auth;
 use Osiset\ShopifyApp\Storage\Models\Plan;
 
@@ -90,6 +92,8 @@ class OrderController extends Controller
 
     public function CreateOrder($order, $shop, $properties = null, $payment = null)
     {
+
+        $CatalogProducts = [];
         try {
 
             $shop = User::where('name', $shop)->first();
@@ -151,6 +155,22 @@ class OrderController extends Controller
                 $lineItem->price = $line_item->price;
                 $lineItem->variant_id = $line_item->variant_id;
                 $lineItem->product_id = $line_item->product_id;
+
+                // check if this product exists in print products catalog then we will create an entry in product sales
+
+                $printProduct = Product::where('product_id', $line_item->product_id)->first();
+
+                if ($printProduct->print_product_id !== null) {
+                    $sale = ProductSale::create([
+                        'order_id' => $ord->id,
+                        'product_id' => $printProduct->id,
+                        'print_product_id' => $printProduct->print_product_id,
+                        'sale' => $line_item->price
+                    ]);
+
+                    array_push($CatalogProducts, $sale);
+                }
+
                 $product = $shop->api()->rest('GET', '/admin/products/' . $line_item->product_id . '.json');
                 if (!$product['errors']) {
                     $product = $product['body']['product'];
@@ -183,12 +203,16 @@ class OrderController extends Controller
                 }
                 $lineItem->save();
             }
-
+            $paymentController = new PaymentController();
+            $paymentResponse=$paymentController->deductCommission($CatalogProducts, $shop);
             return true;
         } catch (\Exception $exception) {
             dd($exception);
         }
     }
+
+
+
 
 
     public function orderDetail($id)

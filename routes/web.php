@@ -32,6 +32,7 @@ Route::middleware(['auth.shopify', 'store'])->group(function () {
 
         Route::get('/shopify/synchronize/products', [\App\Http\Controllers\ProductController::class, 'synchronzeProducts'])->name('shopify.synchronize.products');
         Route::get('shopify/products', [\App\Http\Controllers\ProductController::class, 'index'])->name('shopify.products');
+        Route::post('/shopify/products/{id}/store', [ProductController::class, 'storeShopifyProduct'])->name('shopify.products.store');
 
         Route::get('/app/product/{id}/create', [ProductController::class, 'createShopifyProduct'])->name('build.product.shopify');
 

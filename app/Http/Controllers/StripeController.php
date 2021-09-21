@@ -85,7 +85,7 @@ class StripeController extends Controller
 
 
 
-    public function payCharge(object $customer, int $amount)
+    public function payCharge(BillingDetail $customer, int $amount)
     {
 
         // Set your secret key. Remember to switch to your live secret key in production.

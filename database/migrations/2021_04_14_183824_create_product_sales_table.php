@@ -19,6 +19,7 @@ class CreateProductSalesTable extends Migration
             $table->unsignedBigInteger('print_product_id');
             $table->unsignedBigInteger('quantity');
             $table->float('sale');
+            $table->unsignedBigInteger('order_id');
             $table->timestamps();
         });
     }

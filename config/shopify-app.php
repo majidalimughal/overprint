@@ -305,13 +305,26 @@ return [
     */
 
     'webhooks' => [
-        /*
-            [
-                'topic' => env('SHOPIFY_WEBHOOK_1_TOPIC', 'orders/create'),
-                'address' => env('SHOPIFY_WEBHOOK_1_ADDRESS', 'https://some-app.com/webhook/orders-create')
-            ],
-            ...
-        */
+        [
+            'topic' => 'app-uninstalled',
+            'address' => 'https://dev.xprintee.com/webhook/app-uninstalled'
+        ],
+        [
+            'topic' => 'orders/create',
+            'address' => 'https://dev.xprintee.com/webhook/order-create-update'
+        ],
+        [
+            'topic' => 'orders/updated',
+            'address' => 'https://dev.xprintee.com/webhook/order-update'
+        ],
+        [
+            'topic' => 'products/create',
+            'address' => 'https://dev.xprintee.com/webhook/product-create'
+        ],
+        [
+            'topic' => 'products/update',
+            'address' => 'https://dev.xprintee.com/webhook/product-update'
+        ]
     ],
 
     /*
@@ -324,6 +337,8 @@ return [
     */
 
     'scripttags' => [
+
+
         /*
             [
                 'src' => env('SHOPIFY_SCRIPTTAG_1_SRC', 'https://some-app.com/some-controller/js-method-response'),
@@ -331,8 +346,7 @@ return [
                 'display_scope' => env('SHOPIFY_SCRIPTTAG_1_DISPLAY_SCOPE', 'online_store')
             ],
             ...
-        */
-    ],
+        */],
 
     /*
     |--------------------------------------------------------------------------
@@ -351,8 +365,7 @@ return [
                 'job' => env('AFTER_AUTHENTICATE_JOB'), // example: \App\Jobs\AfterAuthorizeJob::class
                 'inline' => env('AFTER_AUTHENTICATE_JOB_INLINE', false) // False = dispatch job for later, true = dispatch immediately
             ],
-        */
-    ],
+        */],
 
     /*
     |--------------------------------------------------------------------------
