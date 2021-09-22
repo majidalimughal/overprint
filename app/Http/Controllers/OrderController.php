@@ -163,7 +163,7 @@ class OrderController extends Controller
 
                 if ($printProduct->print_product_id !== null) {
                     $sale = ProductSale::create([
-                        'order_id' => $ord->id,
+                        'order_id' => $order->id,
                         'product_id' => $printProduct->id,
                         'print_product_id' => $printProduct->print_product_id,
                         'sale' => $line_item->price
