@@ -162,12 +162,12 @@ class OrderController extends Controller
                 $printProduct = Product::where('product_id', $line_item->product_id)->first();
 
                 if ($printProduct->print_product_id !== null) {
-                    $sale = ProductSale::create([
-                        'order_id' => $order->id,
-                        'product_id' => $printProduct->id,
-                        'print_product_id' => $printProduct->print_product_id,
-                        'sale' => $line_item->price
-                    ]);
+                    $sale = new ProductSale();
+                    $sale->order_id = $ord->id;
+                    $sale->product_id = $printProduct->id;
+                    $sale->print_product_id = $printProduct->print_product_id;
+                    $sale->sale = $line_item->price;
+                    $sale->save();
 
                     array_push($CatalogProducts, $sale);
                 }
