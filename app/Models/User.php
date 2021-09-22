@@ -11,7 +11,7 @@ use Osiset\ShopifyApp\Traits\ShopModel;
 
 class User extends Authenticatable implements IShopModel
 {
-    use HasFactory, Notifiable,ShopModel;
+    use HasFactory, Notifiable, ShopModel;
 
     /**
      * The attributes that are mass assignable.
@@ -44,4 +44,8 @@ class User extends Authenticatable implements IShopModel
     ];
 
 
+    public function billingDetails()
+    {
+        return $this->hasOne(BillingDetail::class, 'shop_id');
+    }
 }
