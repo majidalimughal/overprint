@@ -11,26 +11,31 @@ class PrintProduct extends Model
 
     public function has_StoreProduct()
     {
-        return $this->hasMany(Product::class,'print_product_id');
+        return $this->hasMany(Product::class, 'print_product_id');
     }
 
     public function hasSale()
     {
-        return $this->hasMany(ProductSale::class,'print_product_id');
+        return $this->hasMany(ProductSale::class, 'print_product_id');
     }
 
     public function getImagesAttribute($images)
     {
-        if ($images)
-        {
+        if ($images) {
             return json_decode($images);
-        }else return [];
+        } else return [];
     }
     public function getMockupsAttribute($images)
     {
-        if ($images)
-        {
+        if ($images) {
             return json_decode($images);
-        }else return [];
+        } else return [];
+    }
+
+    public function getArtworksAttribute($images)
+    {
+        if ($images) {
+            return json_decode($images);
+        } else return [];
     }
 }

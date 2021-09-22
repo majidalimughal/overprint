@@ -57,16 +57,33 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card p-5">
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Artwork Template Files</label>
+                            <label>images</label>
                             <input type="file" name="images[]" multiple class="multipleImages form-control"/>
                         </div>
                         <div class="form-group images-preview">
                             <div class="row">
                                 @foreach($product->images as $image)
+                                <div class="col-md-4"><img src="{{asset($image)}}" width="100%" height="auto" class="img-thumbnail"/></div>
+                            @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card p-5">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Artwork Template Files</label>
+                            <input type="file" name="artworks[]" multiple class="multipleArtworks form-control"/>
+                        </div>
+                        <div class="form-group artworks-preview">
+                            <div class="row">
+                                @foreach($product->artworks as $image)
                                     <div class="col-md-4"><img src="{{asset($image)}}" width="100%" height="auto" class="img-thumbnail"/></div>
                                 @endforeach
                             </div>
@@ -179,6 +196,18 @@
                     getBase64(file).then(
                         data => {
                             $('.mockups-preview .row').append('<div class="col-md-4"><img src="'+data+'" width="100%" height="auto" class="img-thumbnail"/></div>');
+                        }
+                    );
+                });
+
+            })
+
+            $('.multipleArtworks').on('input',function(){
+                $('.artworks-preview .row').empty();
+                Array.prototype.forEach.call(this.files, function(file) {
+                    getBase64(file).then(
+                        data => {
+                            $('.artworks-preview .row').append('<div class="col-md-4"><img src="'+data+'" width="100%" height="auto" class="img-thumbnail"/></div>');
                         }
                     );
                 });

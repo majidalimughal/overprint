@@ -31,45 +31,40 @@ class AdminController extends Controller
 
     public function orderDetail($id)
     {
-        $order=Order::find($id);
-        if ($order)
-        {
-            return view('superadmin.order-details',compact('order'));
+        $order = Order::find($id);
+        if ($order) {
+            return view('superadmin.order-details', compact('order'));
         }
         abort(404);
     }
 
     public function orders(Request  $request)
     {
-        $admin=Auth::user();
-        $status=null;
-        $orders=Order::query();
-        if ($request->input('status'))
-        {
-            $status=$request->input('status');
+        $admin = Auth::user();
+        $status = null;
+        $orders = Order::query();
+        if ($request->input('status')) {
+            $status = $request->input('status');
         }
-        if($status=='cancelled')
-        {
-            $orders=$orders->whereNotNull('cancelled_at')->paginate(30);
+        if ($status == 'cancelled') {
+            $orders = $orders->whereNotNull('cancelled_at')->paginate(30);
+        } else {
+            $orders = $orders->where('fulfillment_status', $status)->whereNull('cancelled_at')->paginate(30);
         }
-        else
-        {
-            $orders=$orders->where('fulfillment_status',$status)->whereNull('cancelled_at')->paginate(30);
-        }
-        $orders->append(['status'=>$request->input('status')]);
-        return view('superadmin.order',compact('orders', 'admin'));
+        $orders->append(['status' => $request->input('status')]);
+        return view('superadmin.order', compact('orders', 'admin'));
     }
 
     public function stores()
     {
-        $stores=User::where('role','store')->select('id','name','created_at')->orderby('created_at','desc')->paginate(20);
-        return view('superadmin.stores',compact('stores'));
+        $stores = User::where('role', 'store')->select('id', 'name', 'created_at')->orderby('created_at', 'desc')->paginate(20);
+        return view('superadmin.stores', compact('stores'));
     }
 
     public function products()
     {
-        $products=PrintProduct::with(['has_StoreProduct','hasSale'])->orderby('created_at','desc')->paginate(10);
-        return view('superadmin.products',compact('products'));
+        $products = PrintProduct::with(['has_StoreProduct', 'hasSale'])->orderby('created_at', 'desc')->paginate(10);
+        return view('superadmin.products', compact('products'));
     }
 
     public function productsCreate()
@@ -79,27 +74,34 @@ class AdminController extends Controller
 
     public function productsSave(Request  $request)
     {
-        $product=new PrintProduct();
-        $product->title=$request->input('title');
-        $product->description=$request->input('description');
-        $product->shippingdetails=$request->input('shippingdetails');
-        $product->designtemplate=$request->input('designtemplate');
-        $product->sizeguide=$request->input('sizeguide');
-        $product->sizes=$request->input('sizes');
-        $product->price=$request->input('price');
-        $product->thumbnail=Storage::disk('public')->put('product/images',$request->file('thumbnail'));
-        $images=[];
-        foreach ($request->file('images') as $file)
-        {
-            array_push($images,Storage::disk('public')->put('product/images',$file));
+        $product = new PrintProduct();
+        $product->title = $request->input('title');
+        $product->description = $request->input('description');
+        $product->shippingdetails = $request->input('shippingdetails');
+        $product->designtemplate = $request->input('designtemplate');
+        $product->sizeguide = $request->input('sizeguide');
+        $product->sizes = $request->input('sizes');
+        $product->price = $request->input('price');
+        $product->thumbnail = Storage::disk('public')->put('product/images', $request->file('thumbnail'));
+        $images = [];
+        foreach ($request->file('images') as $file) {
+            array_push($images, Storage::disk('public')->put('product/images', $file));
         }
-        $product->images=json_encode($images);
-        $mockups=[];
+        $product->images = json_encode($images);
+        $mockups = [];
+        $artworks = [];
         if ($request->file('mockups')) {
             foreach ($request->file('mockups') as $file) {
                 array_push($mockups, Storage::disk('public')->put('product/images', $file));
             }
             $product->mockups = json_encode($mockups);
+        }
+
+        if ($request->file('artworks')) {
+            foreach ($request->file('artworks') as $file) {
+                array_push($artworks, Storage::disk('public')->put('product/images', $file));
+            }
+            $product->artworks = json_encode($artworks);
         }
         $product->save();
         return redirect()->route('admin.products');
@@ -108,46 +110,47 @@ class AdminController extends Controller
     public function productDelete($id)
     {
         PrintProduct::find($id)->delete();
-        return redirect()->back()->with('success','Product is being deleted');
+        return redirect()->back()->with('success', 'Product is being deleted');
     }
 
     public function productEdit($id)
     {
-        $product=PrintProduct::find($id);
-        if ($product)
-        {
-            return view('superadmin.productedit',compact('product'));
-        }else abort(404);
+        $product = PrintProduct::find($id);
+        if ($product) {
+            return view('superadmin.productedit', compact('product'));
+        } else abort(404);
     }
 
 
-    public function productUpdate($id,Request  $request)
+    public function productUpdate($id, Request  $request)
     {
-        $product=PrintProduct::find($id);
-        $product->title=$request->input('title');
-        $product->description=$request->input('description');
-        $product->shippingdetails=$request->input('shippingdetails');
-        $product->designtemplate=$request->input('designtemplate');
-        $product->sizeguide=$request->input('sizeguide');
-        $product->sizes=$request->input('sizes');
-        $product->price=$request->input('price');
-        if ($request->file('thumbnail'))
-        {
-            if(Storage::disk('public')->exists($product->thumbnail)) {
+        $product = PrintProduct::find($id);
+        $product->title = $request->input('title');
+        $product->description = $request->input('description');
+        $product->shippingdetails = $request->input('shippingdetails');
+        $product->designtemplate = $request->input('designtemplate');
+        $product->sizeguide = $request->input('sizeguide');
+        $product->sizes = $request->input('sizes');
+        $product->price = $request->input('price');
+        if ($request->file('thumbnail')) {
+            if (Storage::disk('public')->exists($product->thumbnail)) {
                 Storage::disk('public')->delete($product->thumbnail);
             }
-            $product->thumbnail=Storage::disk('public')->put('product/images',$request->file('thumbnail'));
+            $product->thumbnail = Storage::disk('public')->put('product/images', $request->file('thumbnail'));
         }
+
+        $images = [];
+        $mockups = [];
+        $artworks = [];
         if ($request->file('images')) {
-            foreach ($product->images as $deleteImage)
-            {
-                if(Storage::disk('public')->exists($deleteImage)) {
+            foreach ($product->images as $deleteImage) {
+                if (Storage::disk('public')->exists($deleteImage)) {
                     Storage::disk('public')->delete($deleteImage);
                 }
             }
 
 
-            $images = [];
+
             foreach ($request->file('images') as $file) {
                 array_push($images, Storage::disk('public')->put('product/images', $file));
             }
@@ -155,19 +158,34 @@ class AdminController extends Controller
         }
 
         if ($request->file('mockups')) {
-            foreach ($product->mockups as $deleteImage)
-            {
-                if(Storage::disk('public')->exists($deleteImage))
-                {
+            foreach ($product->mockups as $deleteImage) {
+                if (Storage::disk('public')->exists($deleteImage)) {
                     Storage::disk('public')->delete($deleteImage);
                 }
             }
-            $images = [];
+
             foreach ($request->file('mockups') as $file) {
-                array_push($images, Storage::disk('public')->put('product/images', $file));
+                array_push($mockups, Storage::disk('public')->put('product/images', $file));
             }
-            $product->mockups = json_encode($images);
+            $product->mockups = json_encode($mockups);
         }
+
+        // dd($artworks);
+
+        if ($request->file('artworks')) {
+            foreach ($product->mockups as $deleteImage) {
+                if (Storage::disk('public')->exists($deleteImage)) {
+                    Storage::disk('public')->delete($deleteImage);
+                }
+            }
+
+            foreach ($request->file('artworks') as $file) {
+                array_push($artworks, Storage::disk('public')->put('product/images', $file));
+            }
+            $product->artworks = json_encode($artworks);
+        }
+
+
         $product->save();
         return redirect()->back();
     }

@@ -57,14 +57,29 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-12">
+                <div class="card p-5">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>images</label>
+                            <input type="file" name="images[]" multiple class="multipleImages form-control"/>
+                        </div>
+                        <div class="form-group images-preview">
+                            <div class="row">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-6">
                 <div class="card p-5">
                     <div class="card-body">
                         <div class="form-group">
                             <label>Artwork Template Files</label>
-                            <input type="file" name="images[]" multiple class="multipleImages form-control"/>
+                            <input type="file" name="artworks[]" multiple class="multipleArtworks form-control"/>
                         </div>
-                        <div class="form-group images-preview">
+                        <div class="form-group artworks-preview">
                             <div class="row">
 
                             </div>
@@ -180,6 +195,17 @@
                 });
 
             })
+            $('.multipleArtworks').on('input',function(){
+                $('.mockups-preview .row').empty();
+                Array.prototype.forEach.call(this.files, function(file) {
+                    getBase64(file).then(
+                        data => {
+                            $('.artworks-preview .row').append('<div class="col-md-4"><img src="'+data+'" width="100%" height="auto" class="img-thumbnail"/></div>');
+                        }
+                    );
+                });
+
+            })
             $('#thumbnailimage').on('input',function(){
                 var file = this.files[0];
                 getBase64(file).then(
@@ -189,6 +215,8 @@
                     }
                 );
             })
+
+            
         })
     </script>
 @endsection

@@ -271,7 +271,7 @@ class ProductController extends Controller
         $printProduct = PrintProduct::find($id);
         if ($request->input('files')) {
             if ($request->input('files') == 'artwork') {
-                return $this->zipfile($printProduct->images, 'artwork');
+                return $this->zipfile($printProduct->artworks, 'artwork');
             } else {
                 return $this->zipfile($printProduct->mockups, 'mockup');
             }
