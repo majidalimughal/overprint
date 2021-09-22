@@ -12,6 +12,7 @@ use App\Models\FulfillmentLineItem;
 use App\Models\Product;
 use App\Models\ProductSale;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Osiset\ShopifyApp\Storage\Models\Plan;
 
 class OrderController extends Controller
@@ -204,10 +205,10 @@ class OrderController extends Controller
                 $lineItem->save();
             }
             $paymentController = new PaymentController();
-            $paymentResponse=$paymentController->deductCommission($CatalogProducts, $shop);
+            $paymentResponse = $paymentController->deductCommission($CatalogProducts, $shop);
             return true;
         } catch (\Exception $exception) {
-            dd($exception);
+            Storage::put('Exception.txt', $exception->getMessage());
         }
     }
 
