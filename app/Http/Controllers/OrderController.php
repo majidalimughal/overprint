@@ -91,7 +91,7 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Orders are being synchronized');
     }
 
-    public function CreateOrder($order, $shop, $properties = null, $payment = null)
+    public function CreateOrder($order, $shop, $sale = false)
     {
 
         $CatalogProducts = [];
@@ -121,9 +121,7 @@ class OrderController extends Controller
             $ord->fulfillment_status = $order->fulfillment_status;
 
             $ord->discount_amount = $order->total_discounts;
-            if ($payment !== null) {
-                $ord->payment = json_encode($payment);
-            }
+
             if (isset($order->shipping_address)) {
                 $ord->shipping_address = json_encode($order->shipping_address);
             }
@@ -135,9 +133,7 @@ class OrderController extends Controller
                 }
             }
             $ord->shipping_lines = json_encode($order->shipping_lines);
-            if ($properties !== null) {
-                $ord->properties = json_encode($properties);
-            }
+
             $ord->save();
             foreach ($order->line_items as $key => $line_item) {
                 $lineItem = LineItem::where([
@@ -159,17 +155,19 @@ class OrderController extends Controller
 
                 // check if this product exists in print products catalog then we will create an entry in product sales
 
-                $printProduct = Product::where('product_id', $line_item->product_id)->first();
+                if ($sale == true) {
+                    $printProduct = Product::where('product_id', $line_item->product_id)->first();
 
-                if ($printProduct->print_product_id !== null) {
-                    $sale = new ProductSale();
-                    $sale->order_id = $ord->id;
-                    $sale->product_id = $printProduct->id;
-                    $sale->print_product_id = $printProduct->print_product_id;
-                    $sale->sale = $line_item->price;
-                    $sale->save();
+                    if ($printProduct->print_product_id !== null) {
+                        $sale = new ProductSale();
+                        $sale->order_id = $ord->id;
+                        $sale->product_id = $printProduct->id;
+                        $sale->print_product_id = $printProduct->print_product_id;
+                        $sale->sale = $line_item->price;
+                        $sale->save();
 
-                    array_push($CatalogProducts, $sale);
+                        array_push($CatalogProducts, $sale);
+                    }
                 }
 
                 $product = $shop->api()->rest('GET', '/admin/products/' . $line_item->product_id . '.json');
@@ -204,8 +202,10 @@ class OrderController extends Controller
                 }
                 $lineItem->save();
             }
-            $paymentController = new PaymentController();
-            $paymentResponse = $paymentController->deductCommission($CatalogProducts, $shop);
+            if ($sale == true) {
+                $paymentController = new PaymentController();
+                $paymentResponse = $paymentController->deductCommission($CatalogProducts, $shop);
+            }
             return true;
         } catch (\Exception $exception) {
             Storage::put('Exception.txt', $exception->getMessage());

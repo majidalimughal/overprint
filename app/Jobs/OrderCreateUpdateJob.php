@@ -55,7 +55,7 @@ class OrderCreateUpdateJob implements ShouldQueue
 
         $order = json_decode(json_encode($this->data), FALSE);
         $ord = new OrderController();
-        $ord->CreateOrder($order, $this->shopDomain->toNative());
+        $ord->CreateOrder($order, $this->shopDomain->toNative(), true);
 
 
         // Do what you wish with the data
