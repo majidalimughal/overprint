@@ -172,8 +172,7 @@
                                     Products</a></li>
                             <li><a href="{{route('shopify.products')}}?build=true"><span class="dot dot-alert"></span>Synchronized
                                     Products</a></li>
-                            <li><a href="{{route('available.products')}}"><span class="dot dot-primary"></span>Build
-                                    Product</a></li>
+                            <li><a href="{{route('available.products')}}"><span class="dot dot-primary"></span>Product Catalog</a></li>
                             {{--                            <li><a href="{{route('admin.orders')}}?status=cancelled"><span class="dot dot-warning"></span> Cancelled Orders</a></li>--}}
 
                         </ul>
