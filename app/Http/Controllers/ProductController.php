@@ -189,7 +189,9 @@ class ProductController extends Controller
         $images = [];
         foreach ($request->file('images') as $image) {
             $image = Storage::disk('public')->put('uploads', $image);
-            array_push($images, asset($image));
+            array_push($images, [
+                'src' => asset($image)
+            ]);
         }
         return $images;
     }
