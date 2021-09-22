@@ -61,7 +61,7 @@
                 <div class="card p-5">
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Images</label>
+                            <label>Artwork Template Files</label>
                             <input type="file" name="images[]" multiple class="multipleImages form-control"/>
                         </div>
                         <div class="form-group images-preview">
@@ -76,7 +76,7 @@
                 <div class="card p-5">
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Mockups</label>
+                            <label>Mockup Template</label>
                             <input type="file" name="mockups[]" multiple class="multiplemockups form-control"/>
                         </div>
                         <div class="form-group mockups-preview">

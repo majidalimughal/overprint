@@ -73,13 +73,65 @@
                         </div>
                         <div class="block-content">
                             <div class="row" {{--style="display: none"--}}>
-                                <div class="{{--col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3--}} col-md-12" style="padding-bottom: 13px;">
-                                    <div class="dropzone dz-clickable">
-                                        <div class="dz-default dz-message"><span>Click here to upload images.</span></div>
-                                        <div class="row preview-drop"></div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Images</label>
+                                        <input type="file" name="images[]" multiple class="multipleimages form-control"/>
                                     </div>
+                                    <div class="form-group images-preview">
+                                        <div class="row">
+            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block">
+                        <div class="block-header">
+                            <h3 class="block-title">Artwork</h3>
+                            <p>If you upload artwork here, the upcoming order containing the product will have product artwork by default</p>
+                        </div>
+                        <div class="block-content">
+                            <div class="row">
+                                <div class="col-md-12 my-2">
+                                    <a href="{{route('product.files.download',$product->id)}}?files=artwork" class="btn btn-primary">Download Artworks Template</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Artworks Template Files</label>
+                                        <input type="file" name="artworks[]" multiple class="multipleartworks form-control"/>
+                                    </div>
+                                    <div class="form-group artworks-preview">
+                                        <div class="row">
+            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                                    <input style="display: none" accept="image/*"  type="file"  name="images[]" class="push-30-t dz-hidden-input push-30 images-upload" multiple>
+                    <div class="block">
+                        <div class="block-header">
+                            <h3 class="block-title">Product Gallery</h3>
+                            <p>Maximum upload file size: 4MB</p>
+                        </div>
+                        <div class="block-content">
+                            <div class="row">
+                                <div class="col-md-12 my-2">
+                                    <a href="{{route('product.files.download',$product->id)}}?files=mockup" class="btn btn-primary">Download Mockup Template</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Mockup Template Files</label>
+                                        <input type="file" name="mockups[]" multiple class="multiplemockups form-control"/>
+                                    </div>
+                                    <div class="form-group mockups-preview">
+                                        <div class="row">
+            
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -319,14 +371,59 @@
 <script src="{{asset('js/summernote.min.js')}}"></script>
 <script src="{{asset('dropzone/dropzone.min.js')}}"></script>
 <script>
+    function getBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
     $(document).ready(function(){
         $('.summernote').summernote({
             height:'250px'
         });
     })
-    $('body').on('click','.dropzone',function () {
-        $('.images-upload').trigger('click');
-    });
+    // $('body').on('click','.dropzone',function () {
+    //     $('.images-upload').trigger('click');
+    // });
+
+
+    $('.multiplemockups').on('input',function(){
+                $('.mockups-preview .row').empty();
+                Array.prototype.forEach.call(this.files, function(file) {
+                    getBase64(file).then(
+                        data => {
+                            $('.mockups-preview .row').append('<div class="col-md-4"><img src="'+data+'" width="100%" height="auto" class="img-thumbnail"/></div>');
+                        }
+                    );
+                });
+
+            })
+
+            $('.multipleimages').on('input',function(){
+                $('.mockups-preview .row').empty();
+                Array.prototype.forEach.call(this.files, function(file) {
+                    getBase64(file).then(
+                        data => {
+                            $('.images-preview .row').append('<div class="col-md-4"><img src="'+data+'" width="100%" height="auto" class="img-thumbnail"/></div>');
+                        }
+                    );
+                });
+
+            }) 
+            
+            $('.multipleartworks').on('input',function(){
+                $('.mockups-preview .row').empty();
+                Array.prototype.forEach.call(this.files, function(file) {
+                    getBase64(file).then(
+                        data => {
+                            $('.artworks-preview .row').append('<div class="col-md-4"><img src="'+data+'" width="100%" height="auto" class="img-thumbnail"/></div>');
+                        }
+                    );
+                });
+
+            }) 
     
     
     var dropzone = new Dropzone('#create_product_form', {
@@ -337,7 +434,10 @@
   maxFilesize: 3,
   filesizeBase: 1000,
   thumbnail: function(file, dataUrl) {
+    console.log(file.previewElement,file,dataUrl);
     if (file.previewElement) {
+
+        
       file.previewElement.classList.remove("dz-file-preview");
       var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
       for (var i = 0; i < images.length; i++) {

@@ -170,7 +170,7 @@
                         <ul class="collapsed" id="collapseExample">
                             <li><a href="{{route('shopify.products')}}"><span class="dot dot-success bg-purple"></span>Store
                                     Products</a></li>
-                            <li><a href="{{route('shopify.products')}}?build=true"><span class="dot dot-alert"></span>Synchronized
+                            <li><a href="{{route('shopify.products')}}?build=true"><span class="dot dot-alert"></span>Build
                                     Products</a></li>
                             <li><a href="{{route('available.products')}}"><span class="dot dot-primary"></span>Product Catalog</a></li>
                             {{--                            <li><a href="{{route('admin.orders')}}?status=cancelled"><span class="dot dot-warning"></span> Cancelled Orders</a></li>--}}

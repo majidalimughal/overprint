@@ -38,7 +38,7 @@ class ProductController extends Controller
 
         return redirect()->back()->with('success', 'Products will be synchronized!');
     }
-    public function CreateUpdateProduct($product, $shop, $print_id = null)
+    public function CreateUpdateProduct($product, $shop, $print_id = null, array $artworks = null, array $mockups = null)
     {
         $product = json_decode(json_encode($product), FALSE);
 
@@ -65,6 +65,12 @@ class ProductController extends Controller
         $Product->tags = $product->tags;
         $Product->options = json_encode($product->options);
         $Product->images = json_encode($product->images);
+        if ($artworks !== null) {
+            $Product->artworks = json_encode($artworks);
+        }
+        if ($mockups !== null) {
+            $Product->mockups = json_encode($mockups);
+        }
         if (isset($product->image->src)) {
             $Product->image = $product->image->src;
         }
@@ -161,6 +167,9 @@ class ProductController extends Controller
         $variantsArray = $this->makeVariants($request);
         $optionsArray = $this->makeOptions($request);
         $imagesArray = $this->makeImages($request);
+
+        $artworks = $this->storeImages($request->file('artworks'));
+        $mockups = $this->storeImages($request->file('mockups'));
         $product = $shop->api()->rest('POST', '/admin/products.json', [
             'product' => [
                 "title" => $request->title,
@@ -176,7 +185,7 @@ class ProductController extends Controller
         ]);
 
         if (isset($product['body']['product'])) {
-            $pro = $this->CreateUpdateProduct($product['body']['product'], $shop->name, $id);
+            $pro = $this->CreateUpdateProduct($product['body']['product'], $shop->name, $id, $artworks, $mockups);
             return redirect()->route('shopify.product.detail', encrypt($pro->id))->with('success', 'Product Created');
         } else {
             return back()->with('error', 'Something went wrong');
@@ -254,5 +263,50 @@ class ProductController extends Controller
             ]);
         }
         return $variants_array;
+    }
+
+
+    public function downlodFiles($id, Request $request)
+    {
+        $printProduct = PrintProduct::find($id);
+        if ($request->input('files')) {
+            if ($request->input('files') == 'artwork') {
+                return $this->zipfile($printProduct->images, 'artwork');
+            } else {
+                return $this->zipfile($printProduct->mockups, 'mockup');
+            }
+        }
+    }
+
+
+    public function zipfile($images, $name)
+    {
+        $zip_file = $name . '.zip'; // Name of our archive to download
+
+        // Initializing PHP class
+        $zip = new \ZipArchive();
+        $zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+
+
+
+        foreach ($images as $index => $image) {
+            $imageName = explode('/', $image);
+            $zip->addFile(public_path($image), $imageName[count($imageName) - 1]);
+        }
+
+        $zip->close();
+
+
+        // We return the file immediately after download
+        return response()->download($zip_file);
+    }
+
+    public function storeImages($files)
+    {
+        $images = [];
+        foreach ($files as $file) {
+            array_push($images, Storage::disk('public')->put('product/images', $file));
+        }
+        return $images;
     }
 }

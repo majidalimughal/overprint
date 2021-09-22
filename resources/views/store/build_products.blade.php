@@ -107,7 +107,7 @@
         class="nav-link active"
         id="ex2-tab-1"
         data-mdb-toggle="tab"
-        href="#ex2-tabs-1"
+        href="#ex2-tabs-1-{{$product->id}}"
         role="tab"
         aria-controls="ex2-tabs-1"
         aria-selected="true"
@@ -119,7 +119,7 @@
         class="nav-link"
         id="ex2-tab-2"
         data-mdb-toggle="tab"
-        href="#ex2-tabs-2"
+        href="#ex2-tabs-2-{{$product->id}}"
         role="tab"
         aria-controls="ex2-tabs-2"
         aria-selected="false"
@@ -131,7 +131,7 @@
         class="nav-link"
         id="ex2-tab-3"
         data-mdb-toggle="tab"
-        href="#ex2-tabs-3"
+        href="#ex2-tabs-3-{{$product->id}}"
         role="tab"
         aria-controls="ex2-tabs-3"
         aria-selected="false"
@@ -145,7 +145,7 @@
   <div class="tab-content" id="ex2-content">
     <div
       class="tab-pane fade show active"
-      id="ex2-tabs-1"
+      id="ex2-tabs-1-{{$product->id}}"
       role="tabpanel"
       aria-labelledby="ex2-tab-1"
     >
@@ -153,7 +153,7 @@
     </div>
     <div
       class="tab-pane fade"
-      id="ex2-tabs-2"
+      id="ex2-tabs-2-{{$product->id}}"
       role="tabpanel"
       aria-labelledby="ex2-tab-2"
     >
@@ -161,7 +161,7 @@
     </div>
     <div
       class="tab-pane fade"
-      id="ex2-tabs-3"
+      id="ex2-tabs-3-{{$product->id}}"
       role="tabpanel"
       aria-labelledby="ex2-tab-3"
     >

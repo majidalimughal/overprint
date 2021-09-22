@@ -43,6 +43,8 @@ Route::middleware(['auth.shopify', 'store'])->group(function () {
         Route::post('/billing/stripe/card/save', [StripeController::class, 'saveCardDetails'])->name('save.billing.card');
 
         Route::post('/change/mode', [SettingController::class, 'changeMode'])->name('change.mode');
+
+        Route::get('/product/{id}/download', [ProductController::class, 'downlodFiles'])->name('product.files.download');
     });
 });
 

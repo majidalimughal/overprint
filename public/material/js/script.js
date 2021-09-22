@@ -964,9 +964,9 @@ $(document).ready(function () {
         }
     });
     /* Admin Module - Dropzone Click JS */
-    $('body').on('click','.dropzone',function () {
-        $('.images-upload').trigger('click');
-    });
+    // $('body').on('click','.dropzone',function () {
+    //     $('.images-upload').trigger('click');
+    // });
 
     var storedFiles = [];
     /* Admin Module - Images UPLOAD JS */
