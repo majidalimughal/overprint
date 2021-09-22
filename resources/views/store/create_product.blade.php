@@ -67,12 +67,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="block">
+                    {{-- <div class="block">
                         <div class="block-header">
                             <h3 class="block-title">Images</h3>
                         </div>
                         <div class="block-content">
-                            <div class="row" {{--style="display: none"--}}>
+                            <div class="row" >
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Images</label>
@@ -86,7 +86,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="block">
                         <div class="block-header">
                             <h3 class="block-title">Artwork</h3>
@@ -120,7 +120,7 @@
                         <div class="block-content">
                             <div class="row">
                                 <div class="col-md-12 my-2">
-                                    <a href="{{route('product.files.download',$product->id)}}?files=mockup" class="btn btn-primary">Download Mockup Template</a>
+                                    <a href="{{route('product.files.download',$product->id)}}?files=artwork" class="btn btn-primary">Download Mockup Template</a>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">

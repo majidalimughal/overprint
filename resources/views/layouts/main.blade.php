@@ -142,8 +142,8 @@ $authUser=\Illuminate\Support\Facades\Auth::user();
                             <ul class="collapsed" id="collapseExample">
                                 <li><a href="{{route('admin.stores')}}"><span
                                             class="dot dot-success bg-purple"></span> All Stores</a></li>
-                                                           <li><a href="{{route('admin.orders')}}?status="><span class="dot dot-alert"></span> New
-                                                                   Orders</a></li>
+                                                           {{-- <li><a href="{{route('admin.orders')}}?status="><span class="dot dot-alert"></span> New
+                                                                   Orders</a></li> --}}
                                 <li><a href="{{route('admin.stores')}}?status=fulfilled"><span
                                             class="dot dot-primary"></span> Available Stores</a></li>
                                 <li><a href="{{route('admin.stores')}}?status=cancelled"><span

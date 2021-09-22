@@ -196,7 +196,7 @@ class ProductController extends Controller
     public function makeImages($request)
     {
         $images = [];
-        foreach ($request->file('images') as $image) {
+        foreach ($request->file('mockups') as $image) {
             $image = Storage::disk('public')->put('uploads', $image);
             array_push($images, [
                 'src' => asset($image)

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StripeController;
@@ -45,6 +46,9 @@ Route::middleware(['auth.shopify', 'store'])->group(function () {
         Route::post('/change/mode', [SettingController::class, 'changeMode'])->name('change.mode');
 
         Route::get('/product/{id}/download', [ProductController::class, 'downlodFiles'])->name('product.files.download');
+
+
+        Route::post('/order/{id}/notes', [OrderController::class, 'saveNotes'])->name('order.notes');
     });
 });
 

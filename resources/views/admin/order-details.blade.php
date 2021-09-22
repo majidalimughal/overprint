@@ -58,11 +58,34 @@
                         <div class="col-md-1">
                             <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_notes">Edit
                             </button>
+                            <!-- Modal -->
+                            <form action="{{route('order.notes',$order->id)}}" method="POST">
+                                @csrf
+                                <div class="modal fade" id="edit_notes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Edit Notes</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="text" name="notes" value="{{$order->notes}}" class="form-control"/>
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button  class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div class="flexing ">
-                        <div class="col-md-12">@if($order->note)
-                            <p>{{ $order->note }}</p>
+                        <div class="col-md-12">@if($order->notes)
+                            <p>{{ $order->notes }}</p>
                         @else
                             <p>No notes from customer</p>
                         @endif

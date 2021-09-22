@@ -213,6 +213,27 @@ class OrderController extends Controller
     }
 
 
+    public function saveNotes($id, Request $request)
+    {
+        $order = Order::find($id);
+        $shop = User::where('name', $order->shop)->first();
+        $ord = $shop->api()->rest('PUT', '/admin/orders/' . $order->shopify_order_id . '.json', [
+            'order' => [
+                'note' => $request->notes
+            ]
+        ]);
+        // dd($order);
+
+        if (isset($ord['body']['order'])) {
+            $order->notes = $request->notes;
+            $order->save();
+            return redirect()->back()->with('success', 'Notes Added');
+        }
+
+        return redirect()->back()->with('error', 'Something went wrong');
+    }
+
+
 
 
 
