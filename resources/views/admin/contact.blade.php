@@ -15,6 +15,7 @@
                       <h2 class="mb-0">
                         <a href="javascript:void(0)" class="btn-block bg-white text-primary text-left" type="button" data-toggle="collapse" data-target="#collapseOne{{$contact->id}}" aria-expanded="true" aria-controls="collapseOne">
                           {{$contact->name}}
+                          <button onclick="sendMail('{{$contact->email}}')" class="btn btn-primary btn-sm float-right mt-1" href="mailto:{{$contact->email}}">Send Mail</button>
                         </a>
                       </h2>
                     </div>
@@ -33,4 +34,14 @@
     </div>
     
 
+@endsection
+
+
+@section('scripts')
+<script>
+    function sendMail(email)
+    {
+        window.open('mailto:'+email);
+    }
+</script>
 @endsection
