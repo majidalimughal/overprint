@@ -168,11 +168,12 @@
                            data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i
                                 class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Products</span></a>
                         <ul class="collapsed" id="collapseExample">
-                            <li><a href="{{route('shopify.products')}}"><span class="dot dot-success bg-purple"></span>Store
-                                    Products</a></li>
-                            <li><a href="{{route('shopify.products')}}?build=true"><span class="dot dot-alert"></span>Build
-                                    Products</a></li>
                             <li><a href="{{route('available.products')}}"><span class="dot dot-primary"></span>Product Catalog</a></li>
+
+                            {{-- <li><a href="{{route('shopify.products')}}"><span class="dot dot-success bg-purple"></span>Store
+                                    Products</a></li> --}}
+                            <li><a href="{{route('shopify.products')}}?build=true"><span class="dot dot-alert"></span>Created
+                                    Products</a></li>
                             {{--                            <li><a href="{{route('admin.orders')}}?status=cancelled"><span class="dot dot-warning"></span> Cancelled Orders</a></li>--}}
 
                         </ul>
@@ -184,7 +185,7 @@
                                 class="mdi mdi-credit-card"></i><span class="hide-menu">Billing Methods</span></a>
                     </li>
 
-                    <li><a class="waves-effect waves-dark" href="{{route('home')}}" aria-expanded="false"><i
+                    <li><a class="waves-effect waves-dark" href="{{route('contact.us')}}" aria-expanded="false"><i
                                 class="mdi mdi-help-circle"></i><span class="hide-menu">Support</span></a>
                     </li>
 

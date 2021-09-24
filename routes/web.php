@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -49,6 +50,9 @@ Route::middleware(['auth.shopify', 'store'])->group(function () {
 
 
         Route::post('/order/{id}/notes', [OrderController::class, 'saveNotes'])->name('order.notes');
+
+        Route::view('/contact-us', 'store.contact')->name('contact.us');
+        Route::post('/contact-us/send', [ContactController::class, 'send'])->name('contact.us.send');
     });
 });
 
@@ -62,6 +66,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/products/{id}/delete', [\App\Http\Controllers\AdminController::class, 'productDelete'])->name('admin.product.delete');
     Route::get('/products/{id}/edit', [\App\Http\Controllers\AdminController::class, 'productEdit'])->name('admin.product.edit');
     Route::post('/products/{id}/update', [\App\Http\Controllers\AdminController::class, 'productUpdate'])->name('admin.product.update');
+    Route::get('/admin/contact/us', [ContactController::class, 'index'])->name('admin.contact');
 });
 
 Route::middleware(['supplier', 'auth'])->prefix('supplier')->group(function () {

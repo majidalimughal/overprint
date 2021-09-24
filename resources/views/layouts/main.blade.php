@@ -172,6 +172,10 @@ $authUser=\Illuminate\Support\Facades\Auth::user();
                         <li><a class="waves-effect waves-dark" href="{{route('admin.products')}}" aria-expanded="false"><i
                                     class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Products</span></a>
                         </li>
+
+                        <li><a class="waves-effect waves-dark" href="{{route('admin.contact')}}" aria-expanded="false"><i
+                            class="mdi mdi-help-circle"></i><span class="hide-menu">Support</span></a>
+                        </li>
                         {{-- <li><a class="waves-effect waves-dark" href="{{route('billing.methods')}}"
                                aria-expanded="false"><i
                                     class="mdi mdi-credit-card"></i><span class="hide-menu">Billing Methods</span></a>
