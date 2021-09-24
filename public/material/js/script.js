@@ -1340,7 +1340,7 @@ $(document).ready(function () {
                             '                                                    </td>\n' +
                             '                                                    <td><input type="number" step="any" class="form-control" name="variant_cost[]" value="' + cost + '" placeholder="$0.00"></td>\n' +
                             '                                                    <td><input type="number" step="any" class="form-control" name="variant_quantity[]" value="'+quantity+'" placeholder="0"></td>\n' +
-                            '                                                    <td><input type="text" class="form-control" name="variant_sku[]" value="' +sku+  '"></td>\n' +
+                            '                                                    <td><input type="text" class="form-control" name="variant_sku[]" value=""></td>\n' +
                             '                                                    <td><input type="text" class="form-control" name="variant_barcode[]" placeholder=""></td>\n' +
                             '                                                </tr>');
                     });
@@ -1382,7 +1382,7 @@ $(document).ready(function () {
                     '                                                    </td>\n' +
                     '                                                    <td><input type="number" step="any" class="form-control" name="variant_cost[]" value="' + cost + '" placeholder="$0.00"></td>\n' +
                     '                                                    <td><input type="number" step="any" class="form-control" name="variant_quantity[]" value="'+quantity+'" placeholder="0"></td>\n' +
-                    '                                                    <td><input type="text" class="form-control" name="variant_sku[]" value="' +sku+  '"></td>\n' +
+                    '                                                    <td><input type="text" class="form-control" name="variant_sku[]" value=""></td>\n' +
                     '                                                    <td><input type="text" class="form-control" name="variant_barcode[]" placeholder=""></td>\n' +
                     '                                                </tr>');
             });
