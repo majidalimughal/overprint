@@ -155,8 +155,8 @@
                                 class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Orders</span></a>
                         <ul class="collapsed" id="collapseExample">
                             <li><a href="{{route('admin.orders')}}">All Orders</a></li>
-                            <li><a href="{{route('admin.orders')}}?status="><span class="dot dot-alert"></span> New
-                                    Orders</a></li>
+                            {{-- <li><a href="{{route('admin.orders')}}?status="><span class="dot dot-alert"></span> New
+                                    Orders</a></li> --}}
                             <li><a href="{{route('admin.orders')}}?status=fulfilled"><span
                                         class="dot dot-primary"></span> Completed Orders</a></li>
                             <li><a href="{{route('admin.orders')}}?status=cancelled"><span
