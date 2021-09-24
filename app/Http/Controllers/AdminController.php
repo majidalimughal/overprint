@@ -91,17 +91,11 @@ class AdminController extends Controller
         $mockups = [];
         $artworks = [];
         if ($request->file('mockups')) {
-            foreach ($request->file('mockups') as $file) {
-                array_push($mockups, Storage::disk('public')->put('product/images', $file));
-            }
-            $product->mockups = json_encode($mockups);
+            $product->mockups = Storage::disk('public')->put('product/images', $request->file('mockups'));
         }
 
         if ($request->file('artworks')) {
-            foreach ($request->file('artworks') as $file) {
-                array_push($artworks, Storage::disk('public')->put('product/images', $file));
-            }
-            $product->artworks = json_encode($artworks);
+            $product->artworks = Storage::disk('public')->put('product/images', $request->file('artworks'));
         }
         $product->save();
         return redirect()->route('admin.products');
@@ -158,31 +152,19 @@ class AdminController extends Controller
         }
 
         if ($request->file('mockups')) {
-            foreach ($product->mockups as $deleteImage) {
-                if (Storage::disk('public')->exists($deleteImage)) {
-                    Storage::disk('public')->delete($deleteImage);
-                }
+            if (Storage::disk('public')->exists($product->mockups)) {
+                Storage::disk('public')->delete($product->mockups);
             }
 
-            foreach ($request->file('mockups') as $file) {
-                array_push($mockups, Storage::disk('public')->put('product/images', $file));
-            }
-            $product->mockups = json_encode($mockups);
+            $product->mockups = Storage::disk('public')->put('product/images', $request->file('mockups'));
         }
 
-        // dd($artworks);
-
         if ($request->file('artworks')) {
-            foreach ($product->mockups as $deleteImage) {
-                if (Storage::disk('public')->exists($deleteImage)) {
-                    Storage::disk('public')->delete($deleteImage);
-                }
+            if (Storage::disk('public')->exists($product->artworks)) {
+                Storage::disk('public')->delete($product->artworks);
             }
 
-            foreach ($request->file('artworks') as $file) {
-                array_push($artworks, Storage::disk('public')->put('product/images', $file));
-            }
-            $product->artworks = json_encode($artworks);
+            $product->artworks = Storage::disk('public')->put('product/images', $request->file('artworks'));
         }
 
 

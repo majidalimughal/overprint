@@ -95,7 +95,7 @@
                         <div class="block-content">
                             <div class="row">
                                 <div class="col-md-12 my-2">
-                                    <a href="{{route('product.files.download',$product->id)}}?files=artwork" class="btn btn-primary">Download Artworks Template</a>
+                                    <a href="{{asset($product->artworks)}}" download="artworks" class="btn btn-primary">Download Artworks Template</a>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -120,7 +120,7 @@
                         <div class="block-content">
                             <div class="row">
                                 <div class="col-md-12 my-2">
-                                    <a href="{{route('product.files.download',$product->id)}}?files=artwork" class="btn btn-primary">Download Mockup Template</a>
+                                    <a href="{{asset($product->mockups)}}" download="mockups" class="btn btn-primary">Download Mockup Template</a>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -201,10 +201,24 @@
 
                     <div class="block">
                         <div class="block-header">
-                            <h3 class="block-title">Variant</h3>
+                            <h3 class="block-title">Size</h3>
+                            <div class="form-group">
+                                <div class="col-xs-12 push-10">
+                                    <div class="custom-control custom-checkbox d-inline-block">
+                                        <input type="checkbox" name="variants" checked class="custom-control-input" id="val-terms"  value="1">
+                                        <label class="custom-control-label" for="val-terms">Attach size guide to product description</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="block">
+                        <div class="block-header">
+                            <h3 class="block-title">Variants</h3>
                         </div>
                         <div class="block-content">
-                            <div class="form-group">
+                            <div class="form-group d-none">
                                 <div class="col-xs-12 push-10">
                                     <div class="custom-control custom-checkbox d-inline-block">
                                         <input type="checkbox" name="variants" class="custom-control-input" id="val-terms"  value="1">
@@ -214,7 +228,7 @@
                                 </div>
                             </div>
 
-                            <div class="variant_options" style="display: none;">
+                            <div class="variant_options">
                                 <hr>
                                 <h3 class="font-w300">Options</h3>
                                 <br>
@@ -223,10 +237,10 @@
                                         <h5>Option 1</h5>
                                         <div class="row">
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" placeholder="Attribute Name" name="attribute1">
+                                                <input type="text" value="Size" class="form-control" placeholder="Attribute Name" name="attribute1">
                                             </div>
                                             <div class="col-sm-9">
-                                                <input class="js-tags-options options-preview form-control" type="text"
+                                                <input class="js-tags-options options-preview form-control" value="{{$product->sizes}}" type="text"
                                                        id="product-meta-keywords" name="option1" value="">
                                             </div>
                                         </div>
@@ -380,6 +394,9 @@
             });
         }
     $(document).ready(function(){
+        setTimeout(()=>{
+            $('#val-terms').prop('checked',true);
+        },1000);
         $('.summernote').summernote({
             height:'250px'
         });

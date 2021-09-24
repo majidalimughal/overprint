@@ -25,17 +25,17 @@ class PrintProduct extends Model
             return json_decode($images);
         } else return [];
     }
-    public function getMockupsAttribute($images)
-    {
-        if ($images) {
-            return json_decode($images);
-        } else return [];
-    }
+    // public function getMockupsAttribute($images)
+    // {
+    //     if ($images) {
+    //         return json_decode($images);
+    //     } else return [];
+    // }
 
-    public function getArtworksAttribute($images)
-    {
-        if ($images) {
-            return json_decode($images);
-        } else return [];
-    }
+    // public function getArtworksAttribute($images)
+    // {
+    //     if ($images) {
+    //         return json_decode($images);
+    //     } else return [];
+    // }
 }

@@ -79,14 +79,10 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label>Artwork Template Files</label>
-                            <input type="file" name="artworks[]" multiple class="multipleArtworks form-control"/>
+                            <input type="file" name="artworks" multiple class=" form-control"/>
                         </div>
-                        <div class="form-group artworks-preview">
-                            <div class="row">
-                                @foreach($product->artworks as $image)
-                                    <div class="col-md-4"><img src="{{asset($image)}}" width="100%" height="auto" class="img-thumbnail"/></div>
-                                @endforeach
-                            </div>
+                        <div class="form-group">
+                            <a class="btn btn-primary" download="artworks.zip" href="{{asset($product->artworks)}}">Download Artwork Template Files</a>
                         </div>
                     </div>
                 </div>
@@ -96,14 +92,10 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label>Mockup Template</label>
-                            <input type="file" name="mockups[]" multiple class="multiplemockups form-control"/>
+                            <input type="file" name="mockups" multiple class=" form-control"/>
                         </div>
-                        <div class="form-group mockups-preview">
-                            <div class="row">
-                                @foreach($product->mockups as $image)
-                                    <div class="col-md-4"><img src="{{asset($image)}}" width="100%" height="auto" class="img-thumbnail"/></div>
-                                @endforeach
-                            </div>
+                        <div class="form-group">
+                            <a class="btn btn-primary" download="mockups.zip" href="{{asset($product->mockups)}}">Download Mockup Template Files</a>
                         </div>
                     </div>
                 </div>

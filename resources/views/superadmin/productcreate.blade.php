@@ -77,12 +77,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label>Artwork Template Files</label>
-                            <input type="file" name="artworks[]" multiple class="multipleArtworks form-control"/>
-                        </div>
-                        <div class="form-group artworks-preview">
-                            <div class="row">
-
-                            </div>
+                            <input type="file" name="artworks" multiple class="form-control"/>
                         </div>
                     </div>
                 </div>
@@ -92,13 +87,9 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label>Mockup Template</label>
-                            <input type="file" name="mockups[]" multiple class="multiplemockups form-control"/>
+                            <input type="file" name="mockups" multiple class="form-control"/>
                         </div>
-                        <div class="form-group mockups-preview">
-                            <div class="row">
-
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

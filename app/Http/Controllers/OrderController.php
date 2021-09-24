@@ -19,7 +19,15 @@ class OrderController extends Controller
 {
     public function dashboard()
     {
-        return redirect()->route('admin.orders');
+        $shop = Auth::user();
+        $today = Carbon::today()->format('Y-m-d H:i:s');
+        $new_orders = Order::where('shop', $shop->name)->where('status', 'open')->count();
+        $new_orders_today = Order::where('shop', $shop->name)->where('status', 'open')
+            ->where('created_at', '>=', $today)->count();
+        $completed_orders = Order::where('shop', $shop->name)->where('status', 'completed')->count();
+        $completed_orders_today = Order::where('shop', $shop->name)->where('status', 'completed')
+            ->where('created_at', '>=', $today)->count();
+        return view('store.dashboard', compact('new_orders', 'new_orders_today', 'completed_orders', 'completed_orders_today'));
     }
 
     public function orders(Request  $request)
