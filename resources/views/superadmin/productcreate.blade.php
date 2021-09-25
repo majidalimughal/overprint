@@ -44,8 +44,8 @@
                 <div class="card p-5">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6">Region</div>
-                            <div class="col-md-6">Price</div>
+                            <div class="col-md-5">Region</div>
+                            <div class="col-md-5">Price</div>
                         </div>
                         <div class="prices">
                             <div class="row">
