@@ -145,16 +145,51 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Price</label>
-                                        <input type="number" step="any" value="{{$product->price}}" class="form-control" name="price" placeholder="$ 0.00" required>
+                                        <input type="number" step="any" value="" class="form-control" name="price" placeholder="$ 0.00" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 ">
                                     <div class="form-group">
                                         <label>Cost Per Item</label>
-                                        <input type="number" step="any" value="{{$product->price}}" class="form-control" name="cost"
+                                        <input type="number" step="any" value="" class="form-control" name="cost"
                                                placeholder="$ 0.00">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        XPrintee Price
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        Profit
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        Region
+                                    </div>
+                                </div>
+                                @foreach ($product->price as $index=>$price)
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input readonly id="prev_price_{{$index}}" disabled value="{{$price->price}}" class="form-control prev-prices"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input readonly id="profit_{{$index}}" class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>{{$price->region}}</label>
+                                    </div>
+                                </div>
+                                    
+                                @endforeach
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
@@ -394,6 +429,25 @@
             });
         }
     $(document).ready(function(){
+
+        $('input[name=price]').on('input',function(){
+            var price=$(this).val();
+            price=parseFloat(price);
+
+            $('.prev-prices').each((index,item)=>{
+                var prevPrice=$(item).val();
+                prevPrice=parseFloat(prevPrice);
+                var profit=price-prevPrice;
+                $('#profit_'+index).val(profit);
+                if(profit>0)
+                {
+                    $('#profit_'+index).css('border-color','green');
+                }else 
+                {
+                    $('#profit_'+index).css('border-color','red');
+                }
+            })
+        })
         setTimeout(()=>{
             $('#val-terms').prop('checked',true);
         },1000);
