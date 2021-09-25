@@ -43,10 +43,45 @@
             <div class="col-md-5">
                 <div class="card p-5">
                     <div class="card-body">
-                        <div class="form-group">
-                            <label>Price</label>
-                            <input required name="price"value="{{$product->price}}" type="number" step="0.01" class="form-control"/>
+                        <div class="row">
+                            <div class="col-md-6">Region</div>
+                            <div class="col-md-6">Price</div>
                         </div>
+                        <div class="prices">
+                            {{-- @dd($product) --}}
+                            @foreach ($product->price as $key=>$price)
+                            @if($key!==0)
+                            <div class="row mt-1 prices-section">
+                                <div class="col-md-5">
+                                    <input required name="region[]" value="{{$price->region}}" required class="form-control"/>
+                                </div>
+                                <div class="col-md-5">
+                                    <input required name="price[]" type="number" value="{{$price->price}}" required step="0.01" class="form-control"/>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-danger btn-sm remove-price" ><i class="mdi mdi-delete"></i></button>
+                                </div>
+                            </div>
+                            @else
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <input required name="region[]" value="{{$price->region}}" required class="form-control"/>
+                                </div>
+                                <div class="col-md-5">
+                                    <input required name="price[]" type="number" value="{{$price->price}}" required step="0.01" class="form-control"/>
+                                </div>
+                            </div>
+                            @endif
+                                
+                            @endforeach
+                        </div>
+                        <button type="button" id="add_price" class="btn btn-primary btn-sm mt-2">Add</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card p-5">
+                    <div class="card-body">
                         <div class="form-group">
                             <label>Thumbnail</label>
                             <input type="file" id="thumbnailimage"  name="thumbnail" class="form-control"/>

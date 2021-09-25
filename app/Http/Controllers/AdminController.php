@@ -6,6 +6,7 @@ use App\Models\PrintProduct;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -16,17 +17,15 @@ class AdminController extends Controller
 
     public function index()
     {
-        $new_orders = Order::count();
-        $designs = 0;
-        $requested = 0;
-        $approved = Order::where('status', 'approved')->count();
+        $today = Carbon::today()->format('Y-m-d H:i:s');
+        $new_orders = Order::where('status', 'open')->count();
+        $new_orders_today = Order::where('status', 'open')
+            ->where('created_at', '>=', $today)->count();
+        $completed_orders = Order::where('status', 'completed')->count();
+        $completed_orders_today = Order::where('status', 'completed')
+            ->where('created_at', '>=', $today)->count();
 
-        return view('superadmin.home')->with([
-            'new_orders' => $new_orders,
-            'designs' => $designs,
-            'requested' => $requested,
-            'approved' => $approved
-        ]);
+        return view('superadmin.home', compact('new_orders', 'new_orders_today', 'completed_orders', 'completed_orders_today'));
     }
 
     public function orderDetail($id)
@@ -81,7 +80,17 @@ class AdminController extends Controller
         $product->designtemplate = $request->input('designtemplate');
         $product->sizeguide = $request->input('sizeguide');
         $product->sizes = $request->input('sizes');
-        $product->price = $request->input('price');
+
+        $regions = $request->input('region');
+        $prices = $request->input('price');
+        $mainPrices = [];
+        foreach ($regions as $index => $region) {
+            array_push($mainPrices, [
+                'region' => $region,
+                'price' => $prices[$index]
+            ]);
+        }
+        $product->price = json_encode($mainPrices);
         $product->thumbnail = Storage::disk('public')->put('product/images', $request->file('thumbnail'));
         $images = [];
         foreach ($request->file('images') as $file) {
@@ -125,7 +134,16 @@ class AdminController extends Controller
         $product->designtemplate = $request->input('designtemplate');
         $product->sizeguide = $request->input('sizeguide');
         $product->sizes = $request->input('sizes');
-        $product->price = $request->input('price');
+        $regions = $request->input('region');
+        $prices = $request->input('price');
+        $mainPrices = [];
+        foreach ($regions as $index => $region) {
+            array_push($mainPrices, [
+                'region' => $region,
+                'price' => $prices[$index]
+            ]);
+        }
+        $product->price = json_encode($mainPrices);
         if ($request->file('thumbnail')) {
             if (Storage::disk('public')->exists($product->thumbnail)) {
                 Storage::disk('public')->delete($product->thumbnail);

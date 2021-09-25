@@ -43,17 +43,32 @@
             <div class="col-md-5">
                 <div class="card p-5">
                     <div class="card-body">
-                        <div class="form-group">
-                            <label>Price</label>
-                            <input required name="price" type="number" step="0.01" class="form-control"/>
+                        <div class="row">
+                            <div class="col-md-6">Region</div>
+                            <div class="col-md-6">Price</div>
                         </div>
-                        <div class="form-group">
-                            <label>Thumbnail</label>
-                            <input type="file" id="thumbnailimage" required name="thumbnail" class="form-control"/>
+                        <div class="prices">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <input required name="region[]" value="Whole World" required class="form-control"/>
+                                </div>
+                                <div class="col-md-5">
+                                    <input required name="price[]" type="number" required step="0.01" class="form-control"/>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group image-preview ">
-                            <img src="{{asset('c.png')}}" width="140px" height="auto" class="img-thumbnail display_none"/>
-                        </div>
+                        <button type="button" id="add_price" class="btn btn-primary btn-sm mt-2">Add</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card p-5">
+                    <div class="form-group">
+                        <label>Thumbnail</label>
+                        <input type="file" id="thumbnailimage" required name="thumbnail" class="form-control"/>
+                    </div>
+                    <div class="form-group image-preview display_none">
+                        <img src="{{asset('c.png')}}" width="140px" height="auto" class="img-thumbnail display_none"/>
                     </div>
                 </div>
             </div>

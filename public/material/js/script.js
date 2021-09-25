@@ -2086,4 +2086,23 @@ function triggerPaypal(price){
     }).render('#paypal-button-container');
 }
 
+$('body').on('click','.prices-section .remove-price',function(){
+    $(this).parents('.prices-section').remove();
+})
+
+
+$('body').on('click','#add_price',function(){
+    $('.prices').append(`<div class="row mt-1 prices-section">
+    <div class="col-md-5">
+        <input required name="region[]" value="" required class="form-control"/>
+    </div>
+    <div class="col-md-5">
+        <input required name="price[]" type="number" required step="0.01" class="form-control"/>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-danger btn-sm remove-price" ><i class="mdi mdi-delete"></i></button>
+    </div>
+</div>`);
+});
+
 

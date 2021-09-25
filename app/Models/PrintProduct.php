@@ -25,12 +25,18 @@ class PrintProduct extends Model
             return json_decode($images);
         } else return [];
     }
-    // public function getMockupsAttribute($images)
-    // {
-    //     if ($images) {
-    //         return json_decode($images);
-    //     } else return [];
-    // }
+    public function getPriceAttribute($images)
+    {
+        if ($images) {
+            return json_decode($images, FALSE);
+        } else return [];
+    }
+
+
+    public function getAvgPrice()
+    {
+        return collect($this->price)->avg('price');
+    }
 
     // public function getArtworksAttribute($images)
     // {

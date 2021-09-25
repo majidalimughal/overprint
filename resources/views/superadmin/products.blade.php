@@ -36,7 +36,7 @@
                                     <td>{{($products->currentPage()-1)*20+$key+1}}</td>
                                     <td>@if($product->thumbnail) <img src="{{asset($product->thumbnail)}}" class="img-thumbnail" width="70px" height="auto"/> @endif</td>
                                     <td><a href="{{route('admin.product.edit',$product->id)}}">{{$product->title}}</a></td>
-                                    <td>USD {{$product->price}}</td>
+                                    <td> ${{$product->getAvgPrice()}}</td>
                                     <td>{{count($product->has_StoreProduct)}}</td>
                                     <td>{{$product->hasSale->sum('quantity')}}</td>
                                     <td>USD {{$product->hasSale->sum('sale')}}</td>
