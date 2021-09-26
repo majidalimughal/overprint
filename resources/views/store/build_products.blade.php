@@ -98,6 +98,42 @@
                                                         <div class="product-description">
                                                             {!! $product->description!!}
                                                         </div>
+                                                        <div class="row">
+                                                          <div class="col-md-4">
+                                                              <div class="form-group">
+                                                                  XPrintee Price
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-md-4">
+                                                              <div class="form-group">
+                                                                  Profit
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-md-4">
+                                                              <div class="form-group">
+                                                                  Region
+                                                              </div>
+                                                          </div>
+                                                          @foreach ($product->price as $index=>$price)
+                                                          @php if($index===0) $checkPrice=$price ; @endphp
+                                                          <div class="col-md-4">
+                                                              <div class="form-group">
+                                                                  <input readonly id="prev_price_{{$index}}" disabled value="{{$price->price}}" class="form-control prev-prices"/>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-md-4">
+                                                              <div class="form-group">
+                                                                  <input readonly value="{{($checkPrice->price-$price->price)}}" id="profit_{{$index}}" class="form-control"/>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-md-4">
+                                                              <div class="form-group">
+                                                                  <label>{{$price->region}}</label>
+                                                              </div>
+                                                          </div>
+                                                              
+                                                          @endforeach
+                                                      </div>
                                                     </div>
                                                     <div class="col-md-12 mt-5">
                                                         <!-- Tabs navs -->

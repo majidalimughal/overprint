@@ -97,10 +97,9 @@ class AdminController extends Controller
             array_push($images, Storage::disk('public')->put('product/images', $file));
         }
         $product->images = json_encode($images);
-        $mockups = [];
         $artworks = [];
-        if ($request->file('mockups')) {
-            $product->mockups = Storage::disk('public')->put('product/images', $request->file('mockups'));
+        if ($request->input('mockups')) {
+            $product->mockups = $request->input('mockups');
         }
 
         if ($request->file('artworks')) {
@@ -169,13 +168,7 @@ class AdminController extends Controller
             $product->images = json_encode($images);
         }
 
-        if ($request->file('mockups')) {
-            if (Storage::disk('public')->exists($product->mockups)) {
-                Storage::disk('public')->delete($product->mockups);
-            }
-
-            $product->mockups = Storage::disk('public')->put('product/images', $request->file('mockups'));
-        }
+        $product->mockups = $request->input('mockups');
 
         if ($request->file('artworks')) {
             if (Storage::disk('public')->exists($product->artworks)) {

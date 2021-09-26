@@ -126,11 +126,11 @@
                 <div class="card p-5">
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Mockup Template</label>
-                            <input type="file" name="mockups" multiple class=" form-control"/>
+                            <label>Mockup Template Drive Link</label>
+                            <input type="text" required value="{{$product->mockups}}" name="mockups" multiple class=" form-control"/>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-primary" download="mockups.zip" href="{{asset($product->mockups)}}">Download Mockup Template Files</a>
+                            <a class="btn btn-primary" target="_blank" href="{{asset($product->mockups)}}">Download Mockup Template Files</a>
                         </div>
                     </div>
                 </div>

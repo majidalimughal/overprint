@@ -65,6 +65,15 @@
                                               placeholder="Please Enter Description here !">{{$product->description}}</textarea>
                                 </div>
                             </div>
+                            <h3 class="block-title">Size</h3>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 push-10">
+                                            <div class="custom-control custom-checkbox d-inline-block">
+                                                <input type="checkbox" name="variants" checked class="custom-control-input" id="val-terms"  value="1">
+                                                <label class="custom-control-label" for="val-terms">Attach size guide to product description</label>
+                                            </div>
+                                        </div>
+                                    </div>
                         </div>
                     </div>
                     {{-- <div class="block">
@@ -120,7 +129,7 @@
                         <div class="block-content">
                             <div class="row">
                                 <div class="col-md-12 my-2">
-                                    <a href="{{asset($product->mockups)}}" download="mockups" class="btn btn-primary">Download Mockup Template</a>
+                                    <a href="{{asset($product->mockups)}}" target="_blank" class="btn btn-primary">Download Mockup Template</a>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -148,10 +157,10 @@
                                         <input type="number" step="any" value="" class="form-control" name="price" placeholder="$ 0.00" required>
                                     </div>
                                 </div>
-                                <div class="col-md-6 ">
+                                <div class="col-md-6 d-none">
                                     <div class="form-group">
                                         <label>Cost Per Item</label>
-                                        <input type="number" step="any" value="" class="form-control" name="cost"
+                                        <input type="number" step="any" value="0" class="form-control" name="cost"
                                                placeholder="$ 0.00">
                                     </div>
                                 </div>
@@ -234,19 +243,7 @@
                         </div>
                     </div>
 
-                    <div class="block">
-                        <div class="block-header">
-                            <h3 class="block-title">Size</h3>
-                            <div class="form-group">
-                                <div class="col-xs-12 push-10">
-                                    <div class="custom-control custom-checkbox d-inline-block">
-                                        <input type="checkbox" name="variants" checked class="custom-control-input" id="val-terms"  value="1">
-                                        <label class="custom-control-label" for="val-terms">Attach size guide to product description</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                     <div class="block">
                         <div class="block-header">

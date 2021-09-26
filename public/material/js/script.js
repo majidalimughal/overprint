@@ -1319,7 +1319,7 @@ $(document).ready(function () {
             var substr1 = option1.split(',');
             var substr2 = option2.split(',');
             var substr3 = option3.split(',');
-            $('.variants_table').show();
+            // $('.variants_table').show();
             $("tbody").empty();
             var title = '';
             jQuery.each(substr1, function (index1, item1) {
@@ -1348,7 +1348,15 @@ $(document).ready(function () {
             });
         },
         delimiter: [',']
-    });
+    })
+
+    $('body').on('input','input[name=price]',function(){
+        var price=$(this).val();
+        price=parseFloat(price);
+
+        $('input[name="variant_price[]"]').val(price);
+        $('input[name="variant_cost[]"]').val(price);
+    })
 
     $('.js-tags-options1-update').tagsInput({
         height: '36px',
@@ -1371,7 +1379,7 @@ $(document).ready(function () {
             console.log()
             var substr1 = option1.split(',');
             console.log(substr1);
-            $('.variants_table').show();
+            // $('.variants_table').show();
             $(".option-1-table-body").empty();
             var title = '';
             jQuery.each(substr1, function (index1, item1) {

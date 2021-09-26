@@ -158,9 +158,9 @@ $authUser=\Illuminate\Support\Facades\Auth::user();
                                 class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Orders</span></a>
                         <ul class="collapsed" id="collapseExample">
                             <li><a href="{{route('admin.orders.index')}}">All Orders</a></li>
-                            <li><a href="{{route('admin.orders.index')}}?status="><span class="dot dot-alert"></span>
+                            @if($authUser->role=='supplier')<li><a href="{{route('admin.orders.index')}}?status="><span class="dot dot-alert"></span>
                                     New
-                                    Orders</a></li>
+                                    Orders</a></li>@endif
                             <li><a href="{{route('admin.orders.index')}}?status=fulfilled"><span
                                         class="dot dot-primary"></span> Completed Orders</a></li>
                             <li><a href="{{route('admin.orders.index')}}?status=cancelled"><span

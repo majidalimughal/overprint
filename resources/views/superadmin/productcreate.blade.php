@@ -101,8 +101,8 @@
                 <div class="card p-5">
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Mockup Template</label>
-                            <input type="file" name="mockups" multiple class="form-control"/>
+                            <label>Mockup Template Drive link</label>
+                            <input type="text" name="mockups" required class="form-control"/>
                         </div>
                         
                     </div>
