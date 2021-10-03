@@ -168,7 +168,9 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        XPrintee Price
+                                        XPrintee Price 
+                                        <span class="d-block">(Include Shipping)</span>
+
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -269,11 +271,12 @@
                                         <h5>Option 1</h5>
                                         <div class="row">
                                             <div class="col-sm-3">
-                                                <input type="text" value="Size" class="form-control" placeholder="Attribute Name" name="attribute1">
+                                                <input readonly type="text" value="Size" class="form-control" placeholder="Attribute Name" name="attribute1">
                                             </div>
                                             <div class="col-sm-9">
-                                                <input class="js-tags-options options-preview form-control" value="{{$product->sizes}}" type="text"
-                                                       id="product-meta-keywords" name="option1" value="">
+                                                <h3 class="font-medium">{{str_replace(',',' , ',$product->sizes)}}</h6>
+                                                {{-- <input class="js-tags-options options-preview form-control d-none" value="{{$product->sizes}}" type="text"
+                                                       id="product-meta-keywords" name="option1" value=""> --}}
                                             </div>
                                         </div>
                                         <button type="button" class="btn btn-light btn-square option_btn_1 mt-2">
@@ -383,7 +386,7 @@
                             <div class="form-group">
                                 <div class="col-xs-12 push-10">
                                     <label>Vendor</label>
-                                    <input type="text" class="form-control" name="vendor" placeholder="eg. Nike">
+                                    <input type="text" readonly value="XPrintee" class="form-control" name="vendor" placeholder="eg. Nike">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -394,6 +397,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <p class="font-medium mt-3">This product's vendor will be set to "XPrintee". Please do not change this, or we may be unable to process your orders.</p>
                         </div>
                     </div>
                 </div>

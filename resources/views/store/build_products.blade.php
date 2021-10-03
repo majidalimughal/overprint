@@ -4,7 +4,7 @@
     <style>
         .image-preview {
             width: 100%;
-            height: 400px;
+            height: 300px;
             background-size: cover !important;
             background-position: center !important;
             transition: all .2s;
@@ -104,12 +104,12 @@
                                                                   XPrintee Price
                                                               </div>
                                                           </div>
-                                                          <div class="col-md-4">
+                                                          {{-- <div class="col-md-4">
                                                               <div class="form-group">
                                                                   Profit
                                                               </div>
-                                                          </div>
-                                                          <div class="col-md-4">
+                                                          </div> --}}
+                                                          <div class="col-md-8">
                                                               <div class="form-group">
                                                                   Region
                                                               </div>
@@ -121,12 +121,12 @@
                                                                   <input readonly id="prev_price_{{$index}}" disabled value="{{$price->price}}" class="form-control prev-prices"/>
                                                               </div>
                                                           </div>
-                                                          <div class="col-md-4">
+                                                          {{-- <div class="col-md-4 d-none">
                                                               <div class="form-group">
                                                                   <input readonly value="{{($checkPrice->price-$price->price)}}" id="profit_{{$index}}" class="form-control"/>
                                                               </div>
-                                                          </div>
-                                                          <div class="col-md-4">
+                                                          </div> --}}
+                                                          <div class="col-md-8">
                                                               <div class="form-group">
                                                                   <label>{{$price->region}}</label>
                                                               </div>
@@ -171,7 +171,7 @@
         role="tab"
         aria-controls="ex2-tabs-3"
         aria-selected="false"
-        >Shipping DEtails</a
+        >Shipping Details</a
       >
     </li>
   </ul>
@@ -205,6 +205,9 @@
     </div>
   </div>
   <!-- Tabs content -->
+                                                    </div>
+                                                    <div class="col-md-12 text-right mt-2">
+                                                        <a href="{{route('build.product.shopify',encrypt($product->id))}}" class="btn btn-primary mx-1">Create Product</a>
                                                     </div>
                                                 </div>
                                             </div>
