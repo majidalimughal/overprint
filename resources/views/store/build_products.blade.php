@@ -71,12 +71,12 @@
                                                                 @foreach ($product->images as $index=>$image)
                                                                 <li data-target="#carouselExampleIndicators" data-slide-to="{{$index}}" class="{{$index===0?'active':''}}"></li>
                                                                 @endforeach
-                                                              
+
                                                               {{-- <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                                                               <li data-target="#carouselExampleIndicators" data-slide-to="2"></li> --}}
                                                             </ol>
                                                             <div class="carousel-inner">
-                                                              
+
                                                               @foreach ($product->images as $index=>$image)
                                                                 <div class="carousel-item {{$index===0?'active':''}}">
                                                                     <img width="auto" height="500px" class="d-block w-100" src="{{asset($image)}}" alt="First slide">
@@ -119,6 +119,7 @@
                                                           <div class="col-md-4">
                                                               <div class="form-group">
                                                                   <input readonly id="prev_price_{{$index}}" disabled value="{{$price->price}}" class="form-control prev-prices"/>
+                                                                  <span>Include Shipping</span>
                                                               </div>
                                                           </div>
                                                           {{-- <div class="col-md-4 d-none">
@@ -131,7 +132,7 @@
                                                                   <label>{{$price->region}}</label>
                                                               </div>
                                                           </div>
-                                                              
+
                                                           @endforeach
                                                       </div>
                                                     </div>
@@ -176,7 +177,7 @@
     </li>
   </ul>
   <!-- Tabs navs -->
-  
+
   <!-- Tabs content -->
   <div class="tab-content" id="ex2-content">
     <div
