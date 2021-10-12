@@ -117,7 +117,7 @@
                             <input type="file" name="artworks" multiple class=" form-control"/>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-primary" download="artworks.zip" href="{{asset($product->artworks)}}">Download Artwork Template Files</a>
+                            <a class="btn btn-primary" download="artworks" href="{{asset($product->artworks)}}">Download Artwork Template Files</a>
                         </div>
                     </div>
                 </div>
