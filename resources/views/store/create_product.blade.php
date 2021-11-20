@@ -104,7 +104,7 @@
                         <div class="block-content">
                             <div class="row">
                                 <div class="col-md-12 my-2">
-                                    <a href="{{asset($product->artworks)}}" download="artworks" class="btn btn-primary">Download Artworks Template</a>
+                                    <a href="{{asset($product->artworks)}}"  class="btn btn-primary">Download Artworks Template</a>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">

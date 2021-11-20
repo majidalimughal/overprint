@@ -102,8 +102,8 @@ class AdminController extends Controller
             $product->mockups = $request->input('mockups');
         }
 
-        if ($request->file('artworks')) {
-            $product->artworks = Storage::disk('public')->put('product/images', $request->file('artworks'));
+        if ($request->input('artworks')) {
+            $product->artworks = $request->input('artworks');
         }
         $product->save();
         return redirect()->route('admin.products');

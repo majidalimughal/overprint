@@ -91,8 +91,8 @@
                 <div class="card p-5">
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Artwork Template Files</label>
-                            <input type="file" name="artworks" multiple class="form-control"/>
+                            <label>Artwork Template Files Drive link</label>
+                            <input type="text" name="artworks" required class="form-control"/>
                         </div>
                     </div>
                 </div>
